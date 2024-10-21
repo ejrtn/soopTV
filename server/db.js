@@ -6,6 +6,7 @@ pool = mariadb.createPool({
     database: "soop",
     port:3306,
     connectionLimit: 100,
+    charset:'utf8mb4',
 });
 pool.getConnection((err) => {
     if (err) {

@@ -2,21 +2,18 @@
 module.exports = {
     user : {
         user_insert: "INSERT INTO soop.`user`("
-                    + "user_id"
-                    + "user_password"
-                    + "user_name"
-                    + "user_nickname"
-                    + "birth_date"
-                    + "gender"
-                    + "email"
-                    + "phon"
-                    + "advertisement_email"
-                    + "advertisement_sms"
+                    + "user_id,"
+                    + "user_password,"
+                    + "user_name,"
+                    + "birth_date,"
+                    + "gender,"
+                    + "email,"
+                    + "advertisement_email,"
+                    + "advertisement_sms,"
                     + "advertisement_sms_night"
-                    + "add_star_balloon"
-                    + "get_star_balloon"
-                    + "today_get_star_balloon"
-                    + ")VALUES(?,?,?,?,?,?,?,?,?,?,?,0,0,0)",
+                    + ")VALUES(?,?,?,?,?,?,?,?,?)",
+
+                    
         
         get_star_ballloon_update : "UPDATE soop.`user` SET get_star_balloon=? WHERE user_id=?",
 
@@ -34,7 +31,29 @@ module.exports = {
 
         advertisement_email_update :  "UPDATE soop.`user` SET advertisement_email=? WHERE user_id=?",
 
-        user_nickname_select : "SELECT user_nickname from soop.`user` where user_id=?",
+        user_nickname_check : "SELECT user_nickname from soop.`user` where user_nickname=?",
+
+        user_channel_info : "SELECT "
+                            + "user_id,"
+                            + "user_nickname,"
+                            + "channel_name,"
+                            + "CONCAT(star_cnt,'명') as star_cnt,"
+                            + "CONCAT(subscribe_cnt,'명') as subscribe_cnt,"
+                            + "CONCAT(fan_cnt,'명') as fan_cnt,"
+                            + "CONCAT(suport_cnt,'명') as suport_cnt,"
+                            + "DATE_FORMAT(create_date,'%Y-%m-%d') as create_date,"
+                            + "CONCAT(total_play_cnt,'시간') as total_play_cnt,"
+                            + "CONCAT(total_in_user_cnt,'명') as total_in_user_cnt,"
+                            + "total_up_cnt ,"
+                            + "today_up_cnt ,"
+                            + "total_visit_cnt,"
+                            + "today_visit_cnt,"
+                            + "DATE_FORMAT(last_play_date,'%Y-%m-%d %H:%m') as last_play_date"
+                            + " from soop.`user` where user_id=?",
+
+        user_id_check : "SELECT user_id from soop.`user` where user_id=?",
+
+        user_login_check : "SELECT user_id from soop.`user` where user_id=? and user_password=?"
     },
 
     bj_viewers : {
