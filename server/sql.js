@@ -4,6 +4,8 @@ module.exports = {
         user_insert: "INSERT INTO soop.`user`("
                     + "user_id,"
                     + "user_password,"
+                    + "user_nickname,"
+                    + "channel_comment,"
                     + "user_name,"
                     + "birth_date,"
                     + "gender,"
@@ -33,27 +35,61 @@ module.exports = {
 
         user_nickname_check : "SELECT user_nickname from soop.`user` where user_nickname=?",
 
-        user_channel_info : "SELECT "
-                            + "user_id,"
-                            + "user_nickname,"
-                            + "channel_name,"
-                            + "CONCAT(star_cnt,'명') as star_cnt,"
-                            + "CONCAT(subscribe_cnt,'명') as subscribe_cnt,"
-                            + "CONCAT(fan_cnt,'명') as fan_cnt,"
-                            + "CONCAT(suport_cnt,'명') as suport_cnt,"
-                            + "DATE_FORMAT(create_date,'%Y-%m-%d') as create_date,"
-                            + "CONCAT(total_play_cnt,'시간') as total_play_cnt,"
-                            + "CONCAT(total_in_user_cnt,'명') as total_in_user_cnt,"
-                            + "total_up_cnt ,"
-                            + "today_up_cnt ,"
-                            + "total_visit_cnt,"
-                            + "today_visit_cnt,"
-                            + "DATE_FORMAT(last_play_date,'%Y-%m-%d %H:%m') as last_play_date"
-                            + " from soop.`user` where user_id=?",
+        user_channel_info : "SELECT"
+                            + " *"
+                            + " from("
+                            +   " SELECT"
+                            +       " user_id,"
+                            +       " user_nickname,"
+                            +       " channel_name,"
+                            +       " channel_comment,"
+                            +       " CONCAT(star_cnt,'명') as star_cnt,"
+                            +       " CONCAT(subscribe_cnt,'명') as subscribe_cnt,"
+                            +       " CONCAT(fan_cnt,'명') as fan_cnt,"
+                            +       " CONCAT(suport_cnt,'명') as suport_cnt,"
+                            +       " DATE_FORMAT(create_date,'%Y-%m-%d') as create_date,"
+                            +       " CONCAT(total_play_cnt_talk+total_play_cnt_game+total_play_cnt_sport+total_play_cnt_mobile,'시간') as total_play_cnt,"
+                            +       " CONCAT(total_in_user_cnt,'명') as total_in_user_cnt,"
+                            +       " cast(total_up_cnt as char) as total_up_cnt,"
+                            +       " cast(today_up_cnt as char) as today_up_cnt,"
+                            +       " cast(total_visit_cnt as char) as total_visit_cnt,"
+                            +       " cast(today_visit_cnt as char) as today_visit_cnt,"
+                            +       " DATE_FORMAT(last_play_date,'%Y-%m-%d %H:%m') as last_play_date ,"
+                            +       " CASE"
+                            +           " WHEN total_play_cnt_mobile = 0"
+                            +           " THEN ''"
+                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_mobile desc) as char),'위')"
+                            +       "END as total_play_cnt_mobile_rank,"
+                            +       " CASE"
+                            +           " WHEN total_play_cnt_talk = 0"
+                            +           " THEN ''"
+                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_talk desc) as char),'위')"
+                            +       "END as total_play_cnt_talk_rank,"
+                            +       " CASE"
+                            +           " WHEN total_play_cnt_game = 0"
+                            +           " THEN ''"
+                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_game desc) as char),'위')"
+                            +       "END as total_play_cnt_game_rank,"
+                            +       " CASE"
+                            +           " WHEN total_play_cnt_sport = 0"
+                            +           " THEN ''"
+                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_sport desc) as char),'위')"
+                            +       "END as total_play_cnt_sport_rank,"
 
-        user_id_check : "SELECT user_id from soop.`user` where user_id=?",
 
-        user_login_check : "SELECT user_id from soop.`user` where user_id=? and user_password=?"
+                            +       " CONCAT(cast(rank() over(ORDER BY total_up_cnt desc) as char),'위') as total_up_cnt_rank ,"
+                            +       " CONCAT(cast(rank() over(ORDER BY star_cnt desc) as char),'위') as star_cnt_rank ,"
+                            +       " CONCAT(cast(rank() over(ORDER BY total_play_cnt_talk+total_play_cnt_game+total_play_cnt_sport+total_play_cnt_mobile desc) as char),'위') total_play_cnt_rank,"
+                            +       " CONCAT(cast(rank() over(ORDER BY ad_balloon desc) as char),'위') as ad_balloon_rank"
+                            +   " from soop.`user`"
+                            + " )a"
+                            + " where user_id=?",
+
+        user_id_check : "SELECT user_id from soop.`user` where user_id=? or user_nickname=? or channel_name=?",
+
+        user_login_check : "SELECT user_id from soop.`user` where user_id=? and user_password=?",
+
+        user_channel_comment : "UPDATE soop.`user` SET channel_comment = ? where user_id = ?"
     },
 
     bj_viewers : {

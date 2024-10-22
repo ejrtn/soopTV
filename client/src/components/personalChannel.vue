@@ -23,7 +23,7 @@
             <div class="personalChannel_body_left">
                 <img src="profile_coffee.JPG">
                 <span>
-                    <label class="nickname">코히.</label>
+                    <label class="channel_nickname"></label>
                     <label class="user_id">(ejrtn153)</label>
                 </span>
                 <span class="write_btn">
@@ -87,47 +87,53 @@
                 <img src="img_ch-default.png" class="benner">
                 <div class="infomation_title">
                     <div class="infomation">
-                        <span class="channel_info_open">
-                            코히
-                            <em>채널 정보</em>
-                            <div class="channel_info_open_icon"><img src="exclamation_mark.svg"></div>
-                        </span>
+                        <div class="channel_info_open">
+                            <span class="channel_info_open_head"></span>
+                            <span>
+                                <em>채널 정보</em>
+                                <div class="channel_info_open_icon"><img src="exclamation_mark.svg"></div>
+                            </span>
+                        </div>
                         <div class="btns">
                             <img src="star.svg" class="icon">
-                            <label class="star_cnt">333</label>
+                            <label class="star_cnt_head">333</label>
                             <img src="subscribe.svg" class="icon">
-                            <label class="subscribe_cnt">333</label>
+                            <label class="subscribe_cnt_head">333</label>
                         </div>
                         <div class="channel_info">
                             <div class="channel_info_x "><img src="x_btn.svg"></div>
                             <h5>채널 정보</h5>
                             <div class="channel_info_data">
-                                <p>
+                                <p class="ad_balloon_rank">
                                     <label>애드벌론 선물</label>
                                     <label></label>
                                 </p>
-                                <p>
+                                <p class="star_cnt_rank">
                                     <label>애청자 증가수</label>
                                     <label></label>
                                 </p>
-                                <p>
-                                    <label>모바일</label>
+                                <p class="total_play_cnt_talk_rank">
+                                    <label>total_play_cnt_talk_rank</label>
                                     <label></label>
                                 </p>
-                                <p>
-                                    <label>토크/캠방</label>
+                                <p class="total_play_cnt_game_rank">
+                                    <label>total_play_cnt_game_rank</label>
                                     <label></label>
                                 </p>
-                                <p>
+                                <p class="total_play_cnt_sport_rank">
+                                    <label>total_play_cnt_sport_rank</label>
+                                    <label></label>
+                                </p>
+                                <p class="total_play_cnt_mobile_rank">
+                                    <label>total_play_cnt_mobile_rank</label>
+                                    <label></label>
+                                </p>
+                                <p class="total_up_cnt_rank">
                                     <label>UP 수</label>
                                     <label></label>
                                 </p>
-                                <p>
+                                <p class="total_play_cnt_rank">
                                     <label>VOD 스트리머</label>
-                                    <label></label>
-                                </p>
-                                <p>
-                                    <label>VOD FAN</label>
                                     <label></label>
                                 </p>
                             </div>
@@ -185,9 +191,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="infomation_self">
-                        안녕하세요.코히.님의 채널 입니다.자기소개를 입력해주세요.
-                    </div>
+                    <div class="infomation_self"><span></span><button></button></div>
                     
                 </div>
                 <!-- <h3>
@@ -220,7 +224,7 @@
                                     <div class="streamer_info">
                                         <img src="profile_coffee.JPG" class="board_profile">
                                         <div>
-                                            <span class="nickname">코히.</span>
+                                            <span class="nickname"></span>
                                             <span class="udate">
                                                 2020-10-02
                                                 <div></div>
@@ -415,6 +419,26 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal">
+            <div class="modal_content">
+                <div class="modal_head">
+                    <div><img src="x_btn.svg"></div>
+                    <p>프로필 메시지 수정</p>
+                </div>
+                <div class="textarea" >
+                    <textarea placeholder="방문 유저에게 전하고 싶은 이야기를 작성해 보세요." maxlength="150"></textarea>
+                    <div>
+                        <span>0</span>
+                        <span> / 150</span>
+                    </div>
+                </div>
+                <div class="modal_bottom">
+                    <button>수정</button>
+                    <button>취소</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -445,14 +469,95 @@
                 }
             }
         })
+        document.querySelector(".infomation_self button").addEventListener("click",()=>{
+            document.querySelector(".textarea textarea").value = document.querySelector(".infomation_self span").textContent
+            document.querySelector(".modal").classList.add("display_flex")
+        })
+        document.querySelector(".modal_head img").addEventListener("click",()=>{
+            document.querySelector(".modal").classList.remove("display_flex")
+        })
+        document.querySelectorAll(".modal_bottom button")[0].addEventListener("click",()=>{
+            axios.post("/api/user_channel_comment",{
+                'user_id':'test1',
+                'channel_comment' : document.querySelector(".textarea textarea").value
+            }).then((req)=>{
+                console.log(req)
+                if(req.status == 200) {
+                    document.querySelector(".modal").classList.remove("display_flex")
+                    document.querySelector(".infomation_self span").textContent = document.querySelector(".textarea textarea").value
+                }
+            })
+        })
+        document.querySelectorAll(".modal_bottom button")[1].addEventListener("click",()=>{
+            document.querySelector(".modal").classList.remove("display_flex")
+        })
+        document.querySelector(".modal textarea").addEventListener("keydown",(e)=>{
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        })
+        document.querySelector(".modal textarea").addEventListener("input",(e)=>{
+            document.querySelectorAll(".textarea span")[0].textContent = e.target.value.length
+        })
         document.querySelector(".channel_info_x").addEventListener("click",()=>{
             document.querySelector(".channel_info").classList.remove("display_flex")
         })
-        axios.get("/api/user_channel_info/ejrtn153")
+
+        axios.get("/api/user_channel_info/test1")
         .then((req)=>{
+                
             let result = req.data.result[0]
-            for(let i=3;i<Object.keys(result).length;i++){
-                document.querySelectorAll("."+Object.keys(result)[i]+" label")[1].textContent = result[Object.keys(result)[i]]
+            console.log(result)
+            for(let i=0;i<Object.keys(result).length;i++){
+                if(Object.keys(result)[i] == 'user_id'){
+                    document.querySelector("."+Object.keys(result)[i]).textContent = "("+result[Object.keys(result)[i]]+")"
+                }else if(Object.keys(result)[i] == 'user_nickname'){
+                    document.querySelector(".channel_nickname").textContent = result[Object.keys(result)[i]]
+                }else if(Object.keys(result)[i] == 'channel_comment'){
+                    document.querySelector(".infomation_self span").textContent = result[Object.keys(result)[i]]
+                }else if(Object.keys(result)[i] == 'channel_name'){
+                    document.querySelector(".channel_info_open_head").textContent = result[Object.keys(result)[i]] == null ? result["user_nickname"] : result[Object.keys(result)[i]]
+                }else{
+                    if(Object.keys(result)[i] == 'subscribe_cnt'){
+                        document.querySelector("."+Object.keys(result)[i]+"_head").textContent = result[Object.keys(result)[i]].replaceAll("명","")
+                    }else if(Object.keys(result)[i] == 'star_cnt'){
+                        let arr = result[Object.keys(result)[i]].replaceAll("명","").split("")
+                        let t = ''
+                        
+                        if(arr.length >= 5){
+                            for(let a=0;a<arr.length-4;a++){
+                                t += arr[a];
+                            }
+                            t += "만"
+                        }else if(arr.length >= 4){
+                            for(let a=0;a<arr.length-3;a++){
+                                t += arr[a];
+                            }
+                            t += "천"
+                        }else{
+                            t = result[Object.keys(result)[i]].replaceAll("명","")
+                        }
+                        document.querySelector("."+Object.keys(result)[i]+"_head").textContent = t
+                    }else if(Object.keys(result)[i] == "total_play_cnt_talk_rank"){
+                        console.log(document.querySelectorAll("."+Object.keys(result)[i]+" label")[0])
+                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '토크/캠방'
+                        console.log(result[Object.keys(result)[i]] == "")
+                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                    }else if(Object.keys(result)[i]== "total_play_cnt_game_rank"){
+                        console.log(document.querySelector(".total_play_cnt_game_rank"))
+                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '게임'
+                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                    }else if(Object.keys(result)[i] == "total_play_cnt_sport_rank"){
+                        console.log(document.querySelector(".total_play_cnt_sport_rank"))
+                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '스포츠'
+                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                    }else if(Object.keys(result)[i] == "total_play_cnt_mobile_rank"){
+                        console.log(document.querySelector(".total_play_cnt_mobile_rank"))
+                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '모바일'
+                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                    }
+                    document.querySelectorAll("."+Object.keys(result)[i]+" label")[1].textContent = result[Object.keys(result)[i]]
+                }
             }
         })
     })
@@ -869,6 +974,10 @@
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation span:hover em{
         opacity: 1;
     }
+    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .channel_info_open{
+        display: flex;
+        align-items: center;
+    }
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation span .channel_info_open_icon {
         width: 24px;
         height: 24px;
@@ -901,6 +1010,12 @@
         margin-right: 30px;
         color: #999999;
     }
+    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .star_cnt_head{
+        font-size: 16px;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .subscribe_cnt_head{
+        font-size: 16px;
+    }
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation_self{
         display: flex;
         align-items: center;
@@ -908,8 +1023,10 @@
         color: #999;
         margin-top: 20px;
     }
-    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation_self::after{
+    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation_self button{
         content: "";
+        outline: none;
+        border: none;
         background: url("/public/write_gray.svg");
         background-size: 2px 12px;
         background-position: 50% 50%;
@@ -1521,6 +1638,9 @@
         padding: 0px 0px 10px 0px;
     }
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .channel_info p{
+        display: none;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .channel_info p:not(.display_none){
         margin: 0;
         display: flex;
         align-items: center;
@@ -1559,4 +1679,105 @@
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .channel_info_data label{
         margin: 0;
     }
+
+
+
+
+
+    .personalChannel .modal{
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        background: #00000080;
+        display: none;
+    }
+    .personalChannel .modal .modal_content{
+        background: #1b1b1c;
+        border: 1px solid #333;
+        z-index: 1500;
+        border-radius: 2px;
+        position: static;
+        padding: 25px 32px 29px;
+        width: 320px;
+        height: 250px;
+    }
+    .personalChannel .modal .modal_content .modal_head{
+        display: flex;
+        flex-flow: column;
+    }
+    .personalChannel .modal .modal_content .modal_head p{
+        display: flex;
+        flex-flow: column;
+        margin-top: 0;
+        border-bottom: 1px solid #333;
+        font-size: 14px;
+        font-weight: bold;
+        padding-bottom: 5px;
+    }
+    .personalChannel .modal .modal_content .modal_head div{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .personalChannel .modal .modal_content .modal_head img{
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
+    .personalChannel .modal .modal_content .textarea{
+        display: flex;
+        flex-flow: column;
+        position: relative;
+    }
+    .personalChannel .modal .modal_content .textarea textarea{
+        resize: none;
+        padding: 20px 16px;
+        height: 100px;
+        background: #0e0e0e;
+        outline: none;
+        border: 1px solid #333;
+        font-size: 10px;
+        color: #fff;
+    }
+    .personalChannel .modal .modal_content .textarea div{
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        font-size: 11px;
+        color: #666;
+    }
+    .personalChannel .modal .modal_content .modal_bottom{
+        display: flex;
+        margin-top: 20px;
+        justify-content: center;
+        gap: 0 10px;
+    }
+    .personalChannel .modal .modal_content .modal_bottom button{
+        display: flex;
+        background: transparent;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        padding: 5px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .personalChannel .modal .modal_content .modal_bottom button:nth-child(1){
+        color: #7398ff;
+        border: 1px solid #7398ff;
+    }
+    .personalChannel .modal .modal_content .modal_bottom button:nth-child(2){
+        border: 1px solid #1b1b1c;
+        background: #0e0e0e;
+        color: #999;
+    }
+    
+    .personalChannel .display_flex{
+        display: flex;
+    };
 </style>

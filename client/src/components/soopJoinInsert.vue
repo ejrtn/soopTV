@@ -281,6 +281,8 @@
                 axios.post("/api/user_insert",{
                     user_id : document.querySelector(".id").value,
                     user_password : document.querySelector(".password").value,
+                    user_nickname : document.querySelector(".id").value,
+                    channel_comment : "안녕하세요. "+document.querySelector(".id").value+"님의 채널 입니다. 자기소개를 입력해주세요.",
                     user_name : document.querySelector(".name").value,
                     birth_date : yyyy+mm+dd,
                     gender : document.querySelectorAll(".gender button")[0].classList.contains("click") ? '남성':'여성',
