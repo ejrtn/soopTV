@@ -507,7 +507,6 @@
         .then((req)=>{
                 
             let result = req.data.result[0]
-            console.log(result)
             for(let i=0;i<Object.keys(result).length;i++){
                 if(Object.keys(result)[i] == 'user_id'){
                     document.querySelector("."+Object.keys(result)[i]).textContent = "("+result[Object.keys(result)[i]]+")"
@@ -539,20 +538,15 @@
                         }
                         document.querySelector("."+Object.keys(result)[i]+"_head").textContent = t
                     }else if(Object.keys(result)[i] == "total_play_cnt_talk_rank"){
-                        console.log(document.querySelectorAll("."+Object.keys(result)[i]+" label")[0])
                         document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '토크/캠방'
-                        console.log(result[Object.keys(result)[i]] == "")
                         if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
                     }else if(Object.keys(result)[i]== "total_play_cnt_game_rank"){
-                        console.log(document.querySelector(".total_play_cnt_game_rank"))
                         document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '게임'
                         if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
                     }else if(Object.keys(result)[i] == "total_play_cnt_sport_rank"){
-                        console.log(document.querySelector(".total_play_cnt_sport_rank"))
                         document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '스포츠'
                         if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
                     }else if(Object.keys(result)[i] == "total_play_cnt_mobile_rank"){
-                        console.log(document.querySelector(".total_play_cnt_mobile_rank"))
                         document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '모바일'
                         if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
                     }
@@ -1104,9 +1098,14 @@
         flex-flow: column;
         gap: 20px 0px;
         position: relative;
+        height: 100%;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_right .body_content .sct-vod div .boundary{
+        height: 50%;
     }
     .personalChannel .personalChannel_body .personalChannel_body_right .body_content .sct-vod img{
         border-radius: 10px;
+        height: 100%;
     }
     .personalChannel .personalChannel_body .personalChannel_body_right .body_content .sct-vod .vod_big{
         width: 100%;

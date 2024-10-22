@@ -75,8 +75,6 @@ module.exports = {
                             +           " THEN ''"
                             +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_sport desc) as char),'위')"
                             +       "END as total_play_cnt_sport_rank,"
-
-
                             +       " CONCAT(cast(rank() over(ORDER BY total_up_cnt desc) as char),'위') as total_up_cnt_rank ,"
                             +       " CONCAT(cast(rank() over(ORDER BY star_cnt desc) as char),'위') as star_cnt_rank ,"
                             +       " CONCAT(cast(rank() over(ORDER BY total_play_cnt_talk+total_play_cnt_game+total_play_cnt_sport+total_play_cnt_mobile desc) as char),'위') total_play_cnt_rank,"
