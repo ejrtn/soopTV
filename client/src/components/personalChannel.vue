@@ -30,6 +30,7 @@
                     글쓰기
                 </span>
                 <div class="fan">
+                    <div class="fan_list"></div>
                     <p class="fan_text">열혈팬</p>
                     <p class="fan_info">
                         <a>
@@ -505,7 +506,6 @@
 
         axios.get("/api/user_channel_info/test1")
         .then((req)=>{
-                
             let result = req.data.result[0]
             for(let i=0;i<Object.keys(result).length;i++){
                 if(Object.keys(result)[i] == 'user_id'){
@@ -552,6 +552,62 @@
                     }
                     document.querySelectorAll("."+Object.keys(result)[i]+" label")[1].textContent = result[Object.keys(result)[i]]
                 }
+            }
+        })
+
+        axios.get("/api/passionate_user_list/test1")
+        .then((req)=>{
+            const data = req.data.result[0]
+            for(let i=0;i<data.length;i++){
+                let t = '<p class="fan_info">'
+                t += '<a>'
+                if(parseInt(data[i]['user_rank']) == 1){
+                    t += '<img src="gold_king.svg">'
+                }else if(parseInt(data[i]['user_rank']) == 2){
+                    t += '<img src="silber_king.svg">'
+                }
+                t += data[i]['user_name']
+                t += '</a>'
+                if(parseInt(data[i]['user_rank']) == 1){
+                    t += '<span>회장</span>'
+                }else if(parseInt(data[i]['user_rank']) == 2){
+                    t += '<span>부회장</span>'
+                }else{
+                    t += '<span>'+data[i]['user_rank']+'등</span>'
+                }
+                t += '</p>'
+                
+                document.querySelector(".fan").innerHTML += t
+
+                if(parseInt(data[i]['user_rank']) < 11){
+                    t = '<div class="fan_line"><p class="fan_info">'
+                }else{
+                    t = '<p class="fan_info">'
+                }
+                t += '<a>'
+                if(parseInt(data[i]['user_rank']) == 1){
+                    t += '<img src="gold_king.svg">'
+                }else if(parseInt(data[i]['user_rank']) == 2){
+                    t += '<img src="silber_king.svg">'
+                }
+                t += data[i]['user_name']
+                t += '</a>'
+                if(parseInt(data[i]['user_rank']) == 1){
+                    t += '<span>회장</span>'
+                }else if(parseInt(data[i]['user_rank']) == 2){
+                    t += '<span>부회장</span>'
+                }else{
+                    t += '<span>'+data[i]['user_rank']+'등</span>'
+                }
+
+                if(parseInt(data[i]['user_rank']) < 11){
+                    t = '</p></div>'
+                    document.querySelector(".fan_lit").innerHTML += t
+                }else{
+                    t = '</p>'
+                    document.querySelectorAll(".fan_lit div")[parseInt(data[i]['user_rank'])-11].innerHTML += t
+                }
+                
             }
         })
     })
@@ -706,6 +762,13 @@
         width: 195px;
         padding-bottom: 10px;
         border-bottom: 1px solid #2e2e2f;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line{
+        display: flex;
+        align-items: center;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line a{
+        width: 50%;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_text{
         font-weight: bold;

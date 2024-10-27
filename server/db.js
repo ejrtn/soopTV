@@ -1,8 +1,8 @@
 const mariadb = require("mariadb/callback");
 pool = mariadb.createPool({
     host: "192.168.56.1",
-    user: "root",
-    password: "root",
+    user: "user",
+    password: "user",
     database: "soop",
     port:3306,
     connectionLimit: 100,

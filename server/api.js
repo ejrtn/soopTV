@@ -3,13 +3,13 @@ var router = express.Router();
 const sql = require("./sql.js")
 const conn = require("./db.js");
 
-router.get('/user_id_check/:user_id', async function(req, res, next) {
+router.get('/user_id_check/:user_id', function(req, res, next) {
     conn.query(sql['user']['user_id_check'],[req.params.user_id,req.params.user_id,req.params.user_id],(err,rows) => {
         res.send({'result':rows})
     })
 });
 
-router.post('/user_insert', async function(req, res, next) {
+router.post('/user_insert', function(req, res, next) {
     conn.query(sql['user']['user_insert'],[
         req.body.user_id,
         req.body.user_password,
@@ -27,20 +27,20 @@ router.post('/user_insert', async function(req, res, next) {
     })
 });
 
-router.post('/user_login_check', async function(req, res, next) {
+router.post('/user_login_check', function(req, res, next) {
     conn.query(sql['user']['user_login_check'],[req.body.user_id,req.body.user_password],(err,rows) => {
         res.send({'result':rows})
     })
 });
 
 
-router.get('/user_channel_info/:user_id', async function(req, res, next) {
+router.get('/user_channel_info/:user_id', function(req, res, next) {
     conn.query(sql['user']['user_channel_info'],[req.params.user_id],(err,rows) => {
         res.send({'result':rows})
     })
 });
 
-router.post('/user_channel_comment', async function(req, res, next) {
+router.post('/user_channel_comment', function(req, res, next) {
     conn.query(sql['user']['user_channel_comment'],[
         req.body.channel_comment
         , req.body.user_id
@@ -48,5 +48,11 @@ router.post('/user_channel_comment', async function(req, res, next) {
         res.send({'result': rows.status})
     })
 });
+
+router.get('/passionate_user_list:/user_id', function(req,res,next) {
+    conn.query(sql['passionate_user_list']['passionate_user_list_select'],[req.params.user_id],(err,rows) => {
+        res.send({'result':rows})
+    })
+})
 
 module.exports = router;

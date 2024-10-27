@@ -13,7 +13,7 @@ module.exports = {
                     + "advertisement_email,"
                     + "advertisement_sms,"
                     + "advertisement_sms_night"
-                    + ")VALUES(?,?,?,?,?,?,?,?,?)",
+                    + ")VALUES(?,?,?,?,?,?,?,?,?,?,?)",
 
                     
         
@@ -111,16 +111,12 @@ module.exports = {
 
     },
 
-    user_get_note : {
-        user_get_note_insert : "INSERT INTO soop.`user_get_note` (user_id, note_title, note_comment, spam_yn) VALUES(?, ?, ?, ?)",
+    user_note : {
+        user_get_note_insert : "INSERT INTO soop.`user_get_note` (user_id, note_title, note_content, spam_yn) VALUES(?, ?, ?, ?)",
 
         custody_yn_update :  "UPDATE soop.`user_get_note` SET custody_yn=? WHERE user_id=? and custody_yn=?",
 
         read_time_update :  "UPDATE soop.`user_get_note` SET read_time=? WHERE user_id=? and custody_yn=?",
-    },
-
-    user_put_note : {
-        user_put_note_insert : "INSERT INTO soop.`user_put_note` (user_id, note_title, note_comment) VALUES(?, ?, ?)",
     },
 
     blck_list : {
@@ -155,10 +151,10 @@ module.exports = {
         spam_note_insert : "INSERT INTO soop.`spam_note` (user_id) VALUES(NULL)",
     },
 
-    void : {
-        void_insert : "INSERT INTO soop.`void` (void_id, title, play_cnt, chat_yn) VALUES(?, ?, ?, ?)",
+    vod : {
+        vod_insert : "INSERT INTO soop.`vod` (vod_id, vod_title, play_cnt, chat_yn) VALUES(?, ?, ?, ?)",
 
-        title_update :  "UPDATE soop.`void` SET title=? WHERE void_id=?",
+        title_update :  "UPDATE soop.`vod` SET vod_title=? WHERE vod_id=?",
     },
 
     vote : {
@@ -171,6 +167,17 @@ module.exports = {
         vote_list_insert : "INSERT INTO soop.`vote_list` (vote_id, comment) VALUES(?, ?)",
 
         vote_list_delete : "DELETE FROM soop.`vote_list` WHERE vote_id=?"
-    }
+    },
 
+    passionate_user_list : {
+        passionate_user_list_select : 'SELECT'
+                            +   ' a.passionate_user_id,'
+                            +   ' a.user_rank,'
+                            +   ' b.user_name,' 
+                            +   ' user from'
+                            + ' soop.passionate_user_list a'
+                            + ' inner join soop.`user` b'
+                            + ' on a.passionate_user_id = b.user_id'
+                            + ' where a.user_id = ?'
+    }  
 }
