@@ -43,6 +43,7 @@ module.exports = {
                             +       " user_nickname,"
                             +       " channel_name,"
                             +       " channel_comment,"
+                            +       " profile_path,"
                             +       " CONCAT(star_cnt,'명') as star_cnt,"
                             +       " CONCAT(subscribe_cnt,'명') as subscribe_cnt,"
                             +       " CONCAT(fan_cnt,'명') as fan_cnt,"
@@ -58,27 +59,27 @@ module.exports = {
                             +       " CASE"
                             +           " WHEN total_play_cnt_mobile = 0"
                             +           " THEN ''"
-                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_mobile desc) as char),'위')"
-                            +       "END as total_play_cnt_mobile_rank,"
+                            +           " else CONCAT(cast(rank() over(ORDER BY total_play_cnt_mobile desc) as char),'위')"
+                            +       " END as total_play_cnt_mobile_rank,"
                             +       " CASE"
                             +           " WHEN total_play_cnt_talk = 0"
                             +           " THEN ''"
-                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_talk desc) as char),'위')"
-                            +       "END as total_play_cnt_talk_rank,"
+                            +           " else CONCAT(cast(rank() over(ORDER BY total_play_cnt_talk desc) as char),'위')"
+                            +       " END as total_play_cnt_talk_rank,"
                             +       " CASE"
                             +           " WHEN total_play_cnt_game = 0"
                             +           " THEN ''"
-                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_game desc) as char),'위')"
-                            +       "END as total_play_cnt_game_rank,"
+                            +           " else CONCAT(cast(rank() over(ORDER BY total_play_cnt_game desc) as char),'위')"
+                            +       " END as total_play_cnt_game_rank,"
                             +       " CASE"
                             +           " WHEN total_play_cnt_sport = 0"
                             +           " THEN ''"
-                            +           "else CONCAT(cast(rank() over(ORDER BY total_play_cnt_sport desc) as char),'위')"
-                            +       "END as total_play_cnt_sport_rank,"
+                            +           " else CONCAT(cast(rank() over(ORDER BY total_play_cnt_sport desc) as char),'위')"
+                            +       " END as total_play_cnt_sport_rank,"
                             +       " CONCAT(cast(rank() over(ORDER BY total_up_cnt desc) as char),'위') as total_up_cnt_rank ,"
                             +       " CONCAT(cast(rank() over(ORDER BY star_cnt desc) as char),'위') as star_cnt_rank ,"
                             +       " CONCAT(cast(rank() over(ORDER BY total_play_cnt_talk+total_play_cnt_game+total_play_cnt_sport+total_play_cnt_mobile desc) as char),'위') total_play_cnt_rank,"
-                            +       " CONCAT(cast(rank() over(ORDER BY ad_balloon desc) as char),'위') as ad_balloon_rank"
+                            +       " CONCAT(cast(rank() over(ORDER BY add_ad_balloon desc) as char),'위') as add_ad_balloon_rank"
                             +   " from soop.`user`"
                             + " )a"
                             + " where user_id=?",
@@ -87,7 +88,9 @@ module.exports = {
 
         user_login_check : "SELECT user_id from soop.`user` where user_id=? and user_password=?",
 
-        user_channel_comment : "UPDATE soop.`user` SET channel_comment = ? where user_id = ?"
+        user_channel_comment : "UPDATE soop.`user` SET channel_comment = ? where user_id = ?",
+
+        gift_balloon : "SELECT user_id, user_name, add_star_balloon from soop.`user` where user_id = ?",
     },
 
     bj_viewers : {
@@ -171,11 +174,11 @@ module.exports = {
 
     passionate_user_list : {
         passionate_user_list_select : 'SELECT'
-                            +   ' a.passionate_user_id,'
-                            +   ' a.user_rank,'
-                            +   ' b.user_name,' 
-                            +   ' user from'
-                            + ' soop.passionate_user_list a'
+                            +   ' a.passionate_user_id as passionate_user_id,'
+                            +   ' a.passionate_user_rank as passionate_user_rank,'
+                            +   ' b.user_name as user_name,'
+                            +   ' b.profile_path as profile_path'
+                            + ' from soop.passionate_user_list a'
                             + ' inner join soop.`user` b'
                             + ' on a.passionate_user_id = b.user_id'
                             + ' where a.user_id = ?'

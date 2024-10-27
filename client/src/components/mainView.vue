@@ -788,7 +788,7 @@
 <script setup>
 </script>
 
-<style scoped>
+<style scope>
     .mainView{
         height: 100%;
     }

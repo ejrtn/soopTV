@@ -11,31 +11,37 @@ const routes = [
         path: '/',
         name: 'main',
         component: MainView,
+        props: true,
     },
     {
         path: '/login',
         name: 'login',
         component: Login,
+        props: true,
     },
     {
         path: '/join',
         name: 'join',
         component: SoopJoin,
+        props: true,
     },
     {
         path: '/joinInsert',
         name: 'joinInsert',
         component: SoopJoinInsert,
+        props: true,
     },
     {
         path: '/ch/:user_id',
         name: 'ch',
         component: PersonalChannel,
+        props: true,
     },
     {
         path: '/gift_balloon/:user_id',
         name: 'giftBalloon',
         component: GiftBalloon,
+        props: true,
     }
 ]
 

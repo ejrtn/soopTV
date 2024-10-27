@@ -3,28 +3,28 @@
         <header>
             <div class="boundary">
                 <div class="left">
-                    <img src="soop_logo.svg">
+                    <img src="/soop_logo.svg">
                     <div class="search">
                         <input type="text" placeholder="채널검색">
-                        <img src="search_btn.svg">
+                        <img src="/search_btn.svg">
                     </div>
                     <button>통합검색</button>
                 </div>
                 <div class="right">
-                    <img src="star_list.svg">
-                    <img src="vod_upload.svg">
-                    <img src="live.svg">
-                    <img src="alarm.svg">
+                    <img src="/star_list.svg">
+                    <img src="/vod_upload.svg">
+                    <img src="/live.svg">
+                    <img src="/alarm.svg">
                     <span>코히.</span>
                 </div>
             </div>
         </header>
         <div class="personalChannel_body">
             <div class="personalChannel_body_left">
-                <img src="profile_coffee.JPG">
+                <img class="my_profile">
                 <span>
                     <label class="channel_nickname"></label>
-                    <label class="user_id">(ejrtn153)</label>
+                    <label class="user_id"></label>
                 </span>
                 <span class="write_btn">
                     글쓰기
@@ -32,24 +32,6 @@
                 <div class="fan">
                     <div class="fan_list"></div>
                     <p class="fan_text">열혈팬</p>
-                    <p class="fan_info">
-                        <a>
-                            <img src="gold_king.svg">
-                            코히.
-                        </a>
-                        <span>회장</span>
-                    </p>
-                    <p class="fan_info">
-                        <a>
-                            <img src="silber_king.svg">
-                            코히.
-                        </a>
-                        <span>부회장</span>
-                    </p>
-                    <p class="fan_info">
-                        <a>코히.</a>
-                        <span>3등</span>
-                    </p>
                 </div>
                 <div class="channel_setting">
                     <span class="channel_setting_text">
@@ -85,27 +67,27 @@
                 </div>
             </div>
             <div class="personalChannel_body_right">
-                <img src="img_ch-default.png" class="benner">
+                <img src="/img_ch-default.png" class="benner">
                 <div class="infomation_title">
                     <div class="infomation">
                         <div class="channel_info_open">
                             <span class="channel_info_open_head"></span>
                             <span>
                                 <em>채널 정보</em>
-                                <div class="channel_info_open_icon"><img src="exclamation_mark.svg"></div>
+                                <div class="channel_info_open_icon"><img src="/exclamation_mark.svg"></div>
                             </span>
                         </div>
                         <div class="btns">
-                            <img src="star.svg" class="icon">
+                            <img src="/star.svg" class="icon">
                             <label class="star_cnt_head">333</label>
-                            <img src="subscribe.svg" class="icon">
+                            <img src="/subscribe.svg" class="icon">
                             <label class="subscribe_cnt_head">333</label>
                         </div>
                         <div class="channel_info">
-                            <div class="channel_info_x "><img src="x_btn.svg"></div>
+                            <div class="channel_info_x "><img src="/x_btn.svg"></div>
                             <h5>채널 정보</h5>
                             <div class="channel_info_data">
-                                <p class="ad_balloon_rank">
+                                <p class="add_ad_balloon_rank">
                                     <label>애드벌론 선물</label>
                                     <label></label>
                                 </p>
@@ -204,16 +186,16 @@
                         <a class="sct-vod-move">VOD</a>
                         <div class="sct-vod">
                             <div class="vod_main">
-                                <img src="interest_img.jpg">
+                                <img src="/interest_img.jpg">
                                 <em>1:28</em>
                             </div>
                             <div class="vod_main_sub">
                                 <div class="boundry">
-                                    <img src="interest_img.jpg">
+                                    <img src="/interest_img.jpg">
                                     <em>1:28</em>
                                 </div>
                                 <div class="boundry">
-                                    <img src="interest_img.jpg">
+                                    <img src="/interest_img.jpg">
                                     <em>1:28</em>
                                 </div>
                             </div>
@@ -223,7 +205,7 @@
                             <div class="board_left">
                                 <div>
                                     <div class="streamer_info">
-                                        <img src="profile_coffee.JPG" class="board_profile">
+                                        <img src="/profile_coffee.JPG" class="board_profile">
                                         <div>
                                             <span class="nickname"></span>
                                             <span class="udate">
@@ -242,7 +224,7 @@
                                     </div>
                                 </div>
                                 <div class="board_img">
-                                    <img src="3781670d900509a1e.png">
+                                    <img src="/3781670d900509a1e.png">
                                 </div>
                             </div>
                             <div class="notes_list">
@@ -275,30 +257,30 @@
                         <a class="catch_hz_story-move">Catch 스토리</a>
                         <div class="catch_hz_story">
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div></div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div></div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                             </div>
                         </div>
                         <a class="vod-list-move">유저 클립</a>
                         <div class="vod-list">
                             <div>
-                                <img src="277829392.jfif">
+                                <img src="/277829392.jfif">
                                 <a class="user_vod_title">
                                     <em>[클립][최가네블루팀]</em>
                                 </a>
@@ -309,7 +291,7 @@
                                 </p>
                             </div>
                             <div>
-                                <img src="277829392.jfif">
+                                <img src="/277829392.jfif">
                                 <a class="user_vod_title">
                                     <em>[클립][최가네블루팀]</em>
                                 </a>
@@ -320,7 +302,7 @@
                                 </p>
                             </div>
                             <div>
-                                <img src="277829392.jfif">
+                                <img src="/277829392.jfif">
                                 <a class="user_vod_title">
                                     <em>[클립][최가네블루팀]</em>
                                 </a>
@@ -331,7 +313,7 @@
                                 </p>
                             </div>
                             <div>
-                                <img src="277829392.jfif">
+                                <img src="/277829392.jfif">
                                 <a class="user_vod_title">
                                     <em>[클립][최가네블루팀]</em>
                                 </a>
@@ -345,42 +327,42 @@
                         <a class="catch_hz_box-move">Catch</a>
                         <div class="catch_hz_box">
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div>
                                     <p class="catch_title">[캐치]리액션으로 시작해 끝나는 영상</p>
                                     <p class="catch_play_cnt">10,000</p>
                                 </div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div>
                                     <p class="catch_title">[캐치]리액션으로 시작해 끝나는 영상</p>
                                     <p class="catch_play_cnt">10,000</p>
                                 </div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div>
                                     <p class="catch_title">[캐치]리액션으로 시작해 끝나는 영상</p>
                                     <p class="catch_play_cnt">10,000</p>
                                 </div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div>
                                     <p class="catch_title">[캐치]리액션으로 시작해 끝나는 영상</p>
                                     <p class="catch_play_cnt">10,000</p>
                                 </div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div>
                                     <p class="catch_title">[캐치]리액션으로 시작해 끝나는 영상</p>
                                     <p class="catch_play_cnt">10,000</p>
                                 </div>
                             </div>
                             <div class="catch">
-                                <div class="catch_thum"><img src="6956835_l.jpg"></div>
+                                <div class="catch_thum"><img src="/6956835_l.jpg"></div>
                                 <div>
                                     <p class="catch_title">[캐치]리액션</p>
                                     <p class="catch_play_cnt">10,000</p>
@@ -390,12 +372,12 @@
                         <a class="sct-uvod-move">유저 VOD</a>
                         <div class="sct-uvod">
                             <div class="uvod_big">
-                                <img src="277829392.jfif">
+                                <img src="/277829392.jfif">
                             </div>
                             <div class="uvod_small">
                                 <div>
-                                    <img src="277829392.jfif">
-                                    <div class="vuod_profile"><img src="profile_coffee.JPG"></div>
+                                    <img src="/277829392.jfif">
+                                    <div class="vuod_profile"><img src="/profile_coffee.JPG"></div>
                                     <p class="uvod_nickname">코히.</p>
                                     <p class="uvod_title">[인방학새론]교수 강의</p>
                                     <p class="uvod_play_cnt_date">
@@ -404,8 +386,8 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <img src="277829392.jfif">
-                                    <div class="vuod_profile"><img src="profile_coffee.JPG"></div>
+                                    <img src="/277829392.jfif">
+                                    <div class="vuod_profile"><img src="/profile_coffee.JPG"></div>
                                     <p class="uvod_nickname">코히.</p>
                                     <p class="uvod_title">[인방학새론]교수 강의</p>
                                     <p class="uvod_play_cnt_date">
@@ -424,7 +406,7 @@
         <div class="modal">
             <div class="modal_content">
                 <div class="modal_head">
-                    <div><img src="x_btn.svg"></div>
+                    <div><img src="/x_btn.svg"></div>
                     <p>프로필 메시지 수정</p>
                 </div>
                 <div class="textarea" >
@@ -445,8 +427,12 @@
 
 <script setup>
     import axios from "axios";
-    import { onMounted } from "vue";
+    import { onMounted, defineProps, inject } from "vue";
+    const props = defineProps({
+        user_id:String,
+    })
     onMounted(()=>{
+        let imgPath = inject("imgPath")['_value']
         document.body.addEventListener("click",(e)=>{
             if(e.target.classList.contains("channel_info_open_icon")
                 || e.target.parentNode.classList.contains("channel_info_open_icon")){
@@ -479,10 +465,10 @@
         })
         document.querySelectorAll(".modal_bottom button")[0].addEventListener("click",()=>{
             axios.post("/api/user_channel_comment",{
-                'user_id':'test1',
+                'user_id':props.user_id,
                 'channel_comment' : document.querySelector(".textarea textarea").value
             }).then((req)=>{
-                console.log(req)
+                
                 if(req.status == 200) {
                     document.querySelector(".modal").classList.remove("display_flex")
                     document.querySelector(".infomation_self span").textContent = document.querySelector(".textarea textarea").value
@@ -504,108 +490,116 @@
             document.querySelector(".channel_info").classList.remove("display_flex")
         })
 
-        axios.get("/api/user_channel_info/test1")
+        axios.get("/api/user_channel_info/"+props.user_id+"/")
         .then((req)=>{
             let result = req.data.result[0]
             for(let i=0;i<Object.keys(result).length;i++){
-                if(Object.keys(result)[i] == 'user_id'){
-                    document.querySelector("."+Object.keys(result)[i]).textContent = "("+result[Object.keys(result)[i]]+")"
-                }else if(Object.keys(result)[i] == 'user_nickname'){
-                    document.querySelector(".channel_nickname").textContent = result[Object.keys(result)[i]]
-                }else if(Object.keys(result)[i] == 'channel_comment'){
-                    document.querySelector(".infomation_self span").textContent = result[Object.keys(result)[i]]
-                }else if(Object.keys(result)[i] == 'channel_name'){
-                    document.querySelector(".channel_info_open_head").textContent = result[Object.keys(result)[i]] == null ? result["user_nickname"] : result[Object.keys(result)[i]]
+                if(Object.keys(result)[i] == 'profile_path'){
+                    document.querySelector(".my_profile").src = imgPath + result[Object.keys(result)[i]]
                 }else{
-                    if(Object.keys(result)[i] == 'subscribe_cnt'){
-                        document.querySelector("."+Object.keys(result)[i]+"_head").textContent = result[Object.keys(result)[i]].replaceAll("명","")
-                    }else if(Object.keys(result)[i] == 'star_cnt'){
-                        let arr = result[Object.keys(result)[i]].replaceAll("명","").split("")
-                        let t = ''
-                        
-                        if(arr.length >= 5){
-                            for(let a=0;a<arr.length-4;a++){
-                                t += arr[a];
+                    if(Object.keys(result)[i] == 'user_id'){
+                        document.querySelector("."+Object.keys(result)[i]).textContent = "("+result[Object.keys(result)[i]]+")"
+                    }else if(Object.keys(result)[i] == 'user_nickname'){
+                        document.querySelector(".channel_nickname").textContent = result[Object.keys(result)[i]]
+                    }else if(Object.keys(result)[i] == 'channel_comment'){
+                        document.querySelector(".infomation_self span").textContent = result[Object.keys(result)[i]]
+                    }else if(Object.keys(result)[i] == 'channel_name'){
+                        document.querySelector(".channel_info_open_head").textContent = result[Object.keys(result)[i]] == null ? result["user_nickname"] : result[Object.keys(result)[i]]
+                    }else{
+                        if(Object.keys(result)[i] == 'subscribe_cnt'){
+                            document.querySelector("."+Object.keys(result)[i]+"_head").textContent = result[Object.keys(result)[i]].replaceAll("명","")
+                        }else if(Object.keys(result)[i] == 'star_cnt'){
+                            let arr = result[Object.keys(result)[i]].replaceAll("명","").split("")
+                            let t = ''
+                            
+                            if(arr.length >= 5){
+                                for(let a=0;a<arr.length-4;a++){
+                                    t += arr[a];
+                                }
+                                t += "만"
+                            }else if(arr.length >= 4){
+                                for(let a=0;a<arr.length-3;a++){
+                                    t += arr[a];
+                                }
+                                t += "천"
+                            }else{
+                                t = result[Object.keys(result)[i]].replaceAll("명","")
                             }
-                            t += "만"
-                        }else if(arr.length >= 4){
-                            for(let a=0;a<arr.length-3;a++){
-                                t += arr[a];
-                            }
-                            t += "천"
-                        }else{
-                            t = result[Object.keys(result)[i]].replaceAll("명","")
+                            document.querySelector("."+Object.keys(result)[i]+"_head").textContent = t
+                        }else if(Object.keys(result)[i] == "total_play_cnt_talk_rank"){
+                            document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '토크/캠방'
+                            if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                        }else if(Object.keys(result)[i]== "total_play_cnt_game_rank"){
+                            document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '게임'
+                            if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                        }else if(Object.keys(result)[i] == "total_play_cnt_sport_rank"){
+                            document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '스포츠'
+                            if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                        }else if(Object.keys(result)[i] == "total_play_cnt_mobile_rank"){
+                            document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '모바일'
+                            if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
                         }
-                        document.querySelector("."+Object.keys(result)[i]+"_head").textContent = t
-                    }else if(Object.keys(result)[i] == "total_play_cnt_talk_rank"){
-                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '토크/캠방'
-                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
-                    }else if(Object.keys(result)[i]== "total_play_cnt_game_rank"){
-                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '게임'
-                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
-                    }else if(Object.keys(result)[i] == "total_play_cnt_sport_rank"){
-                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '스포츠'
-                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
-                    }else if(Object.keys(result)[i] == "total_play_cnt_mobile_rank"){
-                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[0].textContent = '모바일'
-                        if(result[Object.keys(result)[i]] == "") document.querySelector("."+Object.keys(result)[i]).classList.add("display_none")
+                        document.querySelectorAll("."+Object.keys(result)[i]+" label")[1].textContent = result[Object.keys(result)[i]]
                     }
-                    document.querySelectorAll("."+Object.keys(result)[i]+" label")[1].textContent = result[Object.keys(result)[i]]
                 }
             }
         })
 
-        axios.get("/api/passionate_user_list/test1")
+        axios.get("/api/passionate_user_list/"+props.user_id)
         .then((req)=>{
-            const data = req.data.result[0]
+            const data = req.data.result
             for(let i=0;i<data.length;i++){
                 let t = '<p class="fan_info">'
                 t += '<a>'
-                if(parseInt(data[i]['user_rank']) == 1){
-                    t += '<img src="gold_king.svg">'
-                }else if(parseInt(data[i]['user_rank']) == 2){
-                    t += '<img src="silber_king.svg">'
+                if(parseInt(data[i]['passionate_user_rank']) == 1){
+                    t += '<img src="/gold_king.svg" class="king">'
+                }else if(parseInt(data[i]['passionate_user_rank']) == 2){
+                    t += '<img src="/silber_king.svg" class="king">'
                 }
+                t += '<img src="'+imgPath+data[i]['profile_path']+'" class="passionate_profile">'
                 t += data[i]['user_name']
                 t += '</a>'
-                if(parseInt(data[i]['user_rank']) == 1){
+                if(parseInt(data[i]['passionate_user_rank']) == 1){
                     t += '<span>회장</span>'
-                }else if(parseInt(data[i]['user_rank']) == 2){
+                }else if(parseInt(data[i]['passionate_user_rank']) == 2){
                     t += '<span>부회장</span>'
                 }else{
-                    t += '<span>'+data[i]['user_rank']+'등</span>'
+                    t += '<span>'+data[i]['passionate_user_rank']+'등</span>'
                 }
                 t += '</p>'
                 
-                document.querySelector(".fan").innerHTML += t
+                if(parseInt(data[i]['passionate_user_rank']) < 4){
+                    document.querySelector(".fan").innerHTML += t
+                }
 
-                if(parseInt(data[i]['user_rank']) < 11){
+                if(parseInt(data[i]['passionate_user_rank']) < 11){
                     t = '<div class="fan_line"><p class="fan_info">'
                 }else{
                     t = '<p class="fan_info">'
                 }
                 t += '<a>'
-                if(parseInt(data[i]['user_rank']) == 1){
-                    t += '<img src="gold_king.svg">'
-                }else if(parseInt(data[i]['user_rank']) == 2){
-                    t += '<img src="silber_king.svg">'
+                if(parseInt(data[i]['passionate_user_rank']) == 1){
+                    t += '<img src="/gold_king.svg" class="king">'
+                }else if(parseInt(data[i]['passionate_user_rank']) == 2){
+                    t += '<img src="/silber_king.svg" class="king">'
                 }
+                t += '<img src="'+imgPath+data[i]['profile_path']+'" class="passionate_profile">'
                 t += data[i]['user_name']
                 t += '</a>'
-                if(parseInt(data[i]['user_rank']) == 1){
+                if(parseInt(data[i]['passionate_user_rank']) == 1){
                     t += '<span>회장</span>'
-                }else if(parseInt(data[i]['user_rank']) == 2){
+                }else if(parseInt(data[i]['passionate_user_rank']) == 2){
                     t += '<span>부회장</span>'
                 }else{
-                    t += '<span>'+data[i]['user_rank']+'등</span>'
+                    t += '<span>'+data[i]['passionate_user_rank']+'등</span>'
                 }
 
-                if(parseInt(data[i]['user_rank']) < 11){
-                    t = '</p></div>'
-                    document.querySelector(".fan_lit").innerHTML += t
+                if(parseInt(data[i]['passionate_user_rank']) < 11){
+                    t += '</p></div>'
+                    document.querySelector(".fan_list").innerHTML += t
                 }else{
-                    t = '</p>'
-                    document.querySelectorAll(".fan_lit div")[parseInt(data[i]['user_rank'])-11].innerHTML += t
+                    t += '</p>'
+                    document.querySelectorAll(".fan_list div")[parseInt(data[i]['passionate_user_rank'])-11].innerHTML += t
                 }
                 
             }
@@ -722,7 +716,7 @@
         display: flex;
         flex-flow: column;
         align-items: center;
-        padding-top: 776px;
+        padding-top: 575px;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left img{
         height: 90px;
@@ -762,6 +756,15 @@
         width: 195px;
         padding-bottom: 10px;
         border-bottom: 1px solid #2e2e2f;
+        position: relative;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan_list{
+        position: absolute;
+        top: 58px;
+        left: 0px;
+        background: #1b1b1c;
+        border: 1px solid #333;
+        padding: 26px 37px 32px 31px;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line{
         display: flex;
@@ -803,7 +806,7 @@
         text-align: center;
         padding: 3px 0px;
     }
-    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_info img{
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_info .king{
         width: 28px;
         height: 19px;
         position: absolute;
@@ -814,10 +817,7 @@
         font-size: 14px;
         color: #999;
     }
-    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_info a::before{
-        content: "";
-        background: url("/public/default_profile.png") 50% 50% no-repeat;
-        background-size: 30px;
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_info a .passionate_profile{
         width: 28px;
         height: 28px;
         margin-right: 12px;

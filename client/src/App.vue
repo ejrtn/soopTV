@@ -3,7 +3,8 @@
 </template>
 
 <script setup>
-
+import { provide, ref } from 'vue';
+provide('imgPath', ref('http://localhost:3000/static/profile/'));
 </script>
 
 <style>
@@ -25,7 +26,5 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
     background: #454343;
     border-radius: 6px;
-}
-#app {
 }
 </style>

@@ -49,8 +49,15 @@ router.post('/user_channel_comment', function(req, res, next) {
     })
 });
 
-router.get('/passionate_user_list:/user_id', function(req,res,next) {
+router.get('/passionate_user_list/:user_id', function(req,res,next) {
     conn.query(sql['passionate_user_list']['passionate_user_list_select'],[req.params.user_id],(err,rows) => {
+        res.send({'result':rows})
+    })
+})
+
+router.get("/gift_balloon/:user_id", function(req,res,next) {
+    
+    conn.query(sql['user']['gift_balloon'],[req.params.user_id],(err,rows) => {
         res.send({'result':rows})
     })
 })
