@@ -30,8 +30,13 @@
                     글쓰기
                 </span>
                 <div class="fan">
-                    <div class="fan_list"></div>
-                    <p class="fan_text">열혈팬</p>
+                    <div class="fan_list">
+                        <div class="fan_list_head">
+                            <span>열혈팬</span>
+                            <img src="/x_btn.svg">
+                        </div>
+                    </div>
+                    <p class="fan_text">열혈팬<em></em></p>
                 </div>
                 <div class="channel_setting">
                     <span class="channel_setting_text">
@@ -78,10 +83,23 @@
                             </span>
                         </div>
                         <div class="btns">
-                            <img src="/star.svg" class="icon">
-                            <label class="star_cnt_head">333</label>
-                            <img src="/subscribe.svg" class="icon">
-                            <label class="subscribe_cnt_head">333</label>
+                            <div>
+                                <img src="/star.svg" class="icon">
+                                <label class="star_cnt_head">333</label>
+                            </div>
+                            <div>
+                                <img src="/subscribe.svg" class="icon">
+                                <label class="subscribe_cnt_head">333</label>
+                            </div>
+                            <div>
+                                <img src="/put_adballoon.svg">
+                            </div>
+                            <div>
+                                <img src="/put_balloon.svg">
+                            </div>
+                            <div>
+                                <img src="/put_sticker.svg">
+                            </div>
                         </div>
                         <div class="channel_info">
                             <div class="channel_info_x "><img src="/x_btn.svg"></div>
@@ -441,6 +459,10 @@
                 }else{
                     document.querySelector(".channel_info").classList.add("display_flex")
                 }
+            }else if(e.target.parentNode.classList.contains("fan_text")){
+                document.querySelector(".fan_list").classList.add("open")
+            }else if(e.target.parentNode.classList.contains("fan_list_head")){
+                document.querySelector(".fan_list").classList.remove("open")
             }else{
                 let el = e.target
                 while(1){
@@ -451,6 +473,7 @@
                     }
                     if(el.tagName == "BODY"){
                         document.querySelector(".channel_info").classList.remove("display_flex")
+                        document.querySelector(".fan_list").classList.remove("open")
                         break;
                     }
                 }
@@ -548,7 +571,9 @@
         axios.get("/api/passionate_user_list/"+props.user_id)
         .then((req)=>{
             const data = req.data.result
-            for(let i=0;i<data.length;i++){
+            console.log(data)
+            for(let i=0;i<data.length-9;i++){
+                
                 let t = '<p class="fan_info">'
                 t += '<a>'
                 if(parseInt(data[i]['passionate_user_rank']) == 1){
@@ -571,7 +596,7 @@
                 if(parseInt(data[i]['passionate_user_rank']) < 4){
                     document.querySelector(".fan").innerHTML += t
                 }
-
+                
                 if(parseInt(data[i]['passionate_user_rank']) < 11){
                     t = '<div class="fan_line"><p class="fan_info">'
                 }else{
@@ -593,13 +618,14 @@
                 }else{
                     t += '<span>'+data[i]['passionate_user_rank']+'등</span>'
                 }
-
+                
                 if(parseInt(data[i]['passionate_user_rank']) < 11){
                     t += '</p></div>'
                     document.querySelector(".fan_list").innerHTML += t
                 }else{
                     t += '</p>'
-                    document.querySelectorAll(".fan_list div")[parseInt(data[i]['passionate_user_rank'])-11].innerHTML += t
+                    console.log(parseInt(data[i]['passionate_user_rank']))
+                    document.querySelectorAll(".fan_list .fan_line")[parseInt(data[i]['passionate_user_rank'])-11].innerHTML += t
                 }
                 
             }
@@ -764,14 +790,51 @@
         left: 0px;
         background: #1b1b1c;
         border: 1px solid #333;
-        padding: 26px 37px 32px 31px;
+        padding: 26px 30px 32px 30px;
+        z-index: 999;
+        display: none;
+        align-items: flex-start;
+        justify-content: center;
+        flex-flow: column;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_list .fan_info .king{
+        top: 1px;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan_list.open{
+        display: flex;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan_list .fan_list_head{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        width: 364px;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan_list .fan_list_head img{
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line{
         display: flex;
         align-items: center;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line a{
-        width: 50%;
+        
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line p{
+        width: 162px;
+        margin: 0;
+        padding-top: 13px;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line p:nth-child(1){
+        padding-right: 20px;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_line p:nth-child(2){
+        padding-left: 20px;
+        border-left: 1px solid #333;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_text{
         font-weight: bold;
@@ -779,8 +842,7 @@
         align-items: center;
         justify-content: space-between;
     }
-    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_text::after{
-        content: "";
+    .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_text em{
         background: url("/public/plus_btn.svg") 50% 50% no-repeat;
         background-color: #333;
         background-size: 20px 10px;
@@ -810,12 +872,16 @@
         width: 28px;
         height: 19px;
         position: absolute;
+        top: -13px;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_info a{
         display: flex;
         align-items: center;
         font-size: 14px;
         color: #999;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 115px;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left .fan .fan_info a .passionate_profile{
         width: 28px;
@@ -1014,7 +1080,7 @@
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation span em{
         font-size: 12px;
         color: #FCFCFD;
-        display: flex;
+        display: none;
         align-items: center;
         position: absolute;
         padding: 7px 10px;
@@ -1023,13 +1089,12 @@
         z-index: 10;
         background: #555;
         top: 32px;
-        left: 25px;
+        left: -18px;
         white-space: nowrap;
-        opacity: 0;
         cursor: pointer;
     }
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation span:hover em{
-        opacity: 1;
+        display: flex;
     }
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .channel_info_open{
         display: flex;
@@ -1055,6 +1120,20 @@
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .btns{
         display: flex;
         align-items: center;
+        gap: 0 5px
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .btns div{
+        display: flex;
+        align-items: center;
+        border: 1px solid #333;
+        height: 34px;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+    .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .btns div img{
+        width: 15px;
+        height: 15px;
+        
     }
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .icon{
         height: 15px;
@@ -1064,7 +1143,6 @@
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation label{
         font-size: 18px;
         font-weight: bold;
-        margin-right: 30px;
         color: #999999;
     }
     .personalChannel .personalChannel_body .personalChannel_body_right .infomation_title .infomation .star_cnt_head{

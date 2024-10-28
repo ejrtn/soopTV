@@ -4,10 +4,13 @@
 
 <script setup>
 import { provide, ref } from 'vue';
-provide('imgPath', ref('http://localhost:3000/static/profile/'));
+provide('imgPath', ref('http://localhost:3000/static/'));
 </script>
 
 <style>
+html{
+    font-family: "Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",helvetica,sans-serif
+}
 html,body,#app{
     height: 100%;
     background: #0c0d0e;

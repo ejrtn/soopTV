@@ -90,7 +90,16 @@ module.exports = {
 
         user_channel_comment : "UPDATE soop.`user` SET channel_comment = ? where user_id = ?",
 
-        gift_balloon : "SELECT user_id, user_name, add_star_balloon from soop.`user` where user_id = ?",
+        gift_balloon : "SELECT"
+                        +   " a.user_id as user_id,"
+                        +   " a.user_name as user_name,"
+                        +   " a.add_star_balloon as add_star_balloon,"
+                        +   " b.signature_img_path as signature_img_path,"
+                        +   " b.signature_balloon_cnt as signature_balloon_cnt"
+                        + " from `user` a"
+                        + " inner join signature b"
+                        + " on a.user_id = b.user_id"
+                        + " where a.user_id = 'test1';",
     },
 
     bj_viewers : {
@@ -173,14 +182,14 @@ module.exports = {
     },
 
     passionate_user_list : {
-        passionate_user_list_select : 'SELECT'
-                            +   ' a.passionate_user_id as passionate_user_id,'
-                            +   ' a.passionate_user_rank as passionate_user_rank,'
-                            +   ' b.user_name as user_name,'
-                            +   ' b.profile_path as profile_path'
-                            + ' from soop.passionate_user_list a'
-                            + ' inner join soop.`user` b'
-                            + ' on a.passionate_user_id = b.user_id'
-                            + ' where a.user_id = ?'
+        passionate_user_list_select : "SELECT"
+                            +   " a.passionate_user_id as passionate_user_id,"
+                            +   " a.passionate_user_rank as passionate_user_rank,"
+                            +   " b.user_name as user_name,"
+                            +   " b.profile_path as profile_path"
+                            + " from soop.passionate_user_list a"
+                            + " inner join soop.`user` b"
+                            + " on a.passionate_user_id = b.user_id"
+                            + " where a.user_id = ?"
     }  
 }

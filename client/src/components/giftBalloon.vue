@@ -8,11 +8,7 @@
             <div class="tab1">
                 <div class="star_list">
                     <p>시그니처 풍선은 스트리머만의 특별한 풍선입니다.</p>
-                    <div class="signature_img">
-                        <img src="/signature1.png">
-                        <img src="/signature2.png">
-                        <img src="/signature3.png">
-                    </div>
+                    <div class="signature_img"></div>
                     <div class="signature_btn">
                         <button type="button" class="prev"></button>
                         <button type="button" class="next off"></button>
@@ -47,34 +43,86 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal">
+                <div class="modal_content">
+                    <div class="modal_head">
+                        <img src="/x_btn.svg">
+                    </div>
+                    <div class="modal_body">
+                        <div class="modal_body_sub1">
+                            <label></label>
+                            <div>
+                                <dt>별풍선이란?</dt>
+                                <span>
+                                    <p>참여자가 스트리머를 응원하고 후원할 수 있는<br>유료 선물 시스템입니다.</p>
+                                    <p>별풍선을 선물하면 자동으로 스트리머 팬클럽<br>에 가입 됩니다.</p>
+                                    <p>선물받은 스트리머는 별풍선을 환전하여 실제<br>수익으로 돌려 받게 됩니다.</p>
+                                </span>
+                            </div>
+                            <a href="#">상세보기</a>
+                        </div>
+                        <div class="modal_body_sub2">
+                            <label></label>
+                            <div>
+                                <dt>시그니처 풍선이란?</dt>
+                                <span><p>스트리머의 개성이 돋보이도록 직접 만들어<br>등록하는 맞춤형 별풍선입니다.</p></span>
+                            </div>
+                            <a href="#">상세보기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        
     </div>
 </template>
 
 <script setup>
     import axios from "axios";
-    import { onMounted, defineProps } from "vue";
+    import { onMounted, defineProps, inject } from "vue";
     const props = defineProps({
         user_id:String,
     })
     onMounted(()=>{
+        let imgPath = inject("imgPath")['_value']
         axios.get("/api/gift_balloon/"+props.user_id+"/")
         .then((req)=>{
-            const data = req.data.result[0]
-            document.querySelector(".gift_at strong").textContent = data['user_name']+"("+data['user_id']+")"
-            document.querySelector(".userBalloonCount strong").textContent = data['add_star_balloon']
-            if(parseInt(data['add_star_balloon']) < document.querySelector(".put_star_balloon input").value){
+            const data = req.data.result
+            document.querySelector(".gift_at strong").textContent = data[0]['user_name']+"("+data[0]['user_id']+")"
+            document.querySelector(".userBalloonCount strong").textContent = data[0]['add_star_balloon']
+            if(parseInt(data[0]['add_star_balloon']) < document.querySelector(".put_star_balloon input").value){
                 document.querySelector(".txt_error").classList.add("display_flex")
             }else{
                 document.querySelector(".txt_error").classList.remove("display_flex")
             }
             document.querySelector(".put_star_balloon input").addEventListener("input",(e)=>{
-                if(parseInt(data['add_star_balloon']) < e.target.value){
+                if(parseInt(data[0]['add_star_balloon']) < e.target.value){
                     document.querySelector(".txt_error").classList.add("display_flex")
                 }else{
                     document.querySelector(".txt_error").classList.remove("display_flex")
                 }
             })
+
+            let i = 0;
+            if(data.length > 3){
+                document.querySelector(".signature_btn").classList.add("display_flex")
+            }
+            while(1){
+                if(i >= data.length || i > 2){
+                    break;
+                }
+                document.querySelector(".signature_img").innerHTML += "<img class='signature' src='"+imgPath+data[i]['signature_img_path']+"' alt='"+data[i]['signature_balloon_cnt']+"'>"
+                i += 1;
+            }
+        })
+
+        document.querySelector(".modal_head img").addEventListener("click",() => {
+            document.querySelector(".modal").classList.remove("display_flex")
+        })
+        document.querySelector(".giftBalloon h2").addEventListener("click",() => {
+            document.querySelector(".modal").classList.add("display_flex")
         })
     })
 </script>
@@ -94,6 +142,7 @@
         width: 500px;
         height: 520px;
         font-size: 11px;
+        position: relative;
     }
     .giftBalloon h2{
         padding-left: 20px;
@@ -155,7 +204,7 @@
         margin-top: -31px;
         margin-bottom: 8px;
     }
-    .giftBalloon .signature_img img{
+    .giftBalloon .signature_img .signature{
         width: 146px;
         height: 123px;
         box-sizing: border-box;
@@ -168,10 +217,13 @@
         border: 2px solid #4694ff;
     }
     .giftBalloon .signature_btn{
-        display: flex;
+        display: none;
         align-items: center;
         justify-content: center;
         gap: 0 10px;
+    }
+    .giftBalloon .signature_btn.display_flex{
+        display: flex;
     }
     .giftBalloon .signature_btn .prev{
         width: 22px;
@@ -354,5 +406,119 @@
     .giftBalloon .send_area .txt_info,
     .giftBalloon .send_area .input_wrap{
         color:#666666;
+    }
+
+
+    .giftBalloon .modal{
+        width: 100%;
+        height: 100%;
+        font-size: 10px;
+        color: #777;
+        display: none;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        z-index: 999;
+        background: #ffffffad;
+    }
+    .giftBalloon .modal.display_flex{
+        display: flex;
+    }
+    .giftBalloon .modal .modal_content{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #3d80e4;
+        background: #fff;
+    }
+    .giftBalloon .modal .modal_content .modal_head{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 3px;
+        margin-top: 3px;
+    }
+    .giftBalloon .modal .modal_content .modal_head img{
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
+    .giftBalloon .modal .modal_content .modal_body{
+        display: flex;
+        align-items: center;
+        flex-flow: column;
+        padding: 15px 20px 15px 20px;
+        
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub1{
+        display: flex;
+        position: relative;
+        border-bottom: 1px solid #e7e7e7;
+        padding-bottom: 30px;
+        align-items: center;
+        width: 100%;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub2{
+        display: flex;
+        position: relative;
+        padding-bottom: 20px;
+        align-items: center;
+        width: 100%;
+        padding-top: 20px;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub1 label{
+        width: 113px;
+        height: 101px;
+        background: url('/public/star_gift_img.png') no-repeat 0 0;
+        margin-right: 15px;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub2 label{
+        width: 119px;
+        height: 61px;
+        background: url('/public/star_gift_img.png') no-repeat 0 -101px;
+        margin-right: 15px;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub1 dt{
+        font-size: 15px;
+        color: #404256;
+        font-weight: bold;
+        letter-spacing: -0.1em;
+        margin-bottom: 5px;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub2 dt{
+        font-size: 15px;
+        color: #404256;
+        font-weight: bold;
+        letter-spacing: -0.1em;
+        margin-bottom: 5px;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub1 p{
+        margin: 0px 0px 11px 0px;
+        padding-right: 12px;
+        letter-spacing: -1px;
+        display: flex;
+        align-items: center;
+        background: url("/public/bul_dot_sg.gif") no-repeat 0 7px;
+        padding-left: 5px;
+    }
+
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub2 p{
+        margin: 0;
+        letter-spacing: -1px;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub1 a{
+        position: absolute;
+        right: 4px;
+        bottom: 8px;
+        color: #4694ff;
+    }
+    .giftBalloon .modal .modal_content .modal_body .modal_body_sub2 a{
+        position: absolute;
+        right: 4px;
+        bottom: 8px;
+        color: #4694ff;
     }
 </style>
