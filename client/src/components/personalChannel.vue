@@ -83,21 +83,21 @@
                             </span>
                         </div>
                         <div class="btns">
-                            <div>
+                            <div class="star">
                                 <img src="/star.svg" class="icon">
                                 <label class="star_cnt_head">333</label>
                             </div>
-                            <div>
+                            <div class="subscribe">
                                 <img src="/subscribe.svg" class="icon">
                                 <label class="subscribe_cnt_head">333</label>
                             </div>
-                            <div>
-                                <img src="/put_adballoon.svg">
-                            </div>
-                            <div>
+                            <div class="put_balloon">
                                 <img src="/put_balloon.svg">
                             </div>
-                            <div>
+                            <div class="put_adballoon">
+                                <img src="/put_adballoon.svg">
+                            </div>
+                            <div class="put_sticker">
                                 <img src="/put_sticker.svg">
                             </div>
                         </div>
@@ -195,9 +195,6 @@
                     <div class="infomation_self"><span></span><button></button></div>
                     
                 </div>
-                <!-- <h3>
-                    코히.님의 채널에 오신 것을 환영합니다!
-                </h3> -->
                 <div class="body_vod">
                     
                     <div class="body_content">
@@ -512,7 +509,11 @@
         document.querySelector(".channel_info_x").addEventListener("click",()=>{
             document.querySelector(".channel_info").classList.remove("display_flex")
         })
+        document.querySelector(".put_balloon").addEventListener("click",()=>{
 
+            let openWin = window.open("/gift_balloon/"+props.user_id, "giftBalloon", "width=570,height=580");
+            
+        })
         axios.get("/api/user_channel_info/"+props.user_id+"/")
         .then((req)=>{
             let result = req.data.result[0]
@@ -571,7 +572,7 @@
         axios.get("/api/passionate_user_list/"+props.user_id)
         .then((req)=>{
             const data = req.data.result
-            console.log(data)
+            
             for(let i=0;i<data.length-9;i++){
                 
                 let t = '<p class="fan_info">'
@@ -624,7 +625,6 @@
                     document.querySelector(".fan_list").innerHTML += t
                 }else{
                     t += '</p>'
-                    console.log(parseInt(data[i]['passionate_user_rank']))
                     document.querySelectorAll(".fan_list .fan_line")[parseInt(data[i]['passionate_user_rank'])-11].innerHTML += t
                 }
                 
@@ -731,9 +731,9 @@
     .personalChannel .personalChannel_body{
         width: 1180px;
         display: flex;
-        align-items: center;
         height: 100%;
         margin: 0 auto;
+        padding-top: 64px;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left{
         background: #1b1b1c;
@@ -742,7 +742,8 @@
         display: flex;
         flex-flow: column;
         align-items: center;
-        padding-top: 575px;
+        padding-top: 10px;
+        height: 100%;
     }
     .personalChannel .personalChannel_body .personalChannel_body_left img{
         height: 90px;
@@ -1049,7 +1050,6 @@
         display: flex;
         flex-flow: column;
         height: 100%;
-        padding-top: 64px;
         box-sizing: border-box;
         width: 884px;
     }

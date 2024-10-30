@@ -12,7 +12,6 @@ html{
     font-family: "Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",helvetica,sans-serif
 }
 html,body,#app{
-    height: 100%;
     background: #0c0d0e;
     color: #e2e4e9;
 }

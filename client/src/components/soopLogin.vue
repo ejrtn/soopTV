@@ -68,7 +68,7 @@
 
 <style scoped>
     .soopLogin_main{
-        height: 100%;
+        height: 100vh;
         width: 380px;
         display: flex;
         flex-flow: column;

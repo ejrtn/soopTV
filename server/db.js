@@ -1,12 +1,14 @@
 const mariadb = require("mariadb/callback");
+require('dotenv').config();
 pool = mariadb.createPool({
-    host: "192.168.56.1",
-    user: "user",
-    password: "user",
-    database: "soop",
-    port:3306,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port:process.env.DB_PORT,
     connectionLimit: 100,
     charset:'utf8mb4',
+    multipleStatements : true
 });
 pool.getConnection((err) => {
     if (err) {

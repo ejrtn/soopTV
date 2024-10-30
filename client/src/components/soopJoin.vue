@@ -22,7 +22,7 @@
 <style scope>
     .soopJoin_main{
         width: 340px;
-        height: 100%;
+        height: 100vh;
         margin: 0 auto;
         display: flex;
         flex-flow: column;

@@ -1,5 +1,6 @@
 <template>
     <div class="giftBalloon_back">
+        <input type="hidden" class="hidden">
         <div class="giftBalloon">
             <h2>
                 <a href="javascript:;" class="on">별풍선 선물하기</a>
@@ -9,14 +10,14 @@
                 <div class="star_list">
                     <p>시그니처 풍선은 스트리머만의 특별한 풍선입니다.</p>
                     <div class="signature_img"></div>
-                    <div class="signature_btn">
+                    <div class="signature_btn" title="0">
                         <button type="button" class="prev"></button>
                         <button type="button" class="next off"></button>
                     </div>
                 </div>
                 <div class="send_area">
                     <div class="gift_at">
-                        <span><strong>최군형(ch1716)</strong> 님께 선물</span>
+                        <span><strong></strong> 님께 선물</span>
                         <a href="javascript:;" class="btn_stars">별풍선 더보기</a>
                     </div>
                     <div class="put_star_balloon">
@@ -28,7 +29,7 @@
                     <div class="gift_st">
                         <div class="star_cnt">
                             <span>보유 별풍선</span>
-                            <span class="userBalloonCount"><strong>0</strong>개</span>
+                            <span class="userBalloonCount"><strong></strong>개</span>
                             <label class="txt_error"><em></em><span>보유 별풍선 부족</span></label>  
                         </div>
                         <span class="buy">구매</span>
@@ -85,37 +86,38 @@
     const props = defineProps({
         user_id:String,
     })
+    let signature_list = []
     onMounted(()=>{
         let imgPath = inject("imgPath")['_value']
-        axios.get("/api/gift_balloon/"+props.user_id+"/")
+        axios.get("/api/gift_balloon/"+props.user_id)
         .then((req)=>{
             const data = req.data.result
-            document.querySelector(".gift_at strong").textContent = data[0]['user_name']+"("+data[0]['user_id']+")"
-            document.querySelector(".userBalloonCount strong").textContent = data[0]['add_star_balloon']
-            if(parseInt(data[0]['add_star_balloon']) < document.querySelector(".put_star_balloon input").value){
-                document.querySelector(".txt_error").classList.add("display_flex")
-            }else{
-                document.querySelector(".txt_error").classList.remove("display_flex")
-            }
-            document.querySelector(".put_star_balloon input").addEventListener("input",(e)=>{
-                if(parseInt(data[0]['add_star_balloon']) < e.target.value){
-                    document.querySelector(".txt_error").classList.add("display_flex")
+            for(let i=0;i<data.length;i++){
+                if(data[i]['user_id'] == props.user_id){
+                    document.querySelector(".gift_at strong").textContent = data[0]['user_name']+"("+data[0]['user_id']+")"
+                    
+                    
+                    document.querySelector(".put_star_balloon input").addEventListener("input",(e)=>{
+                        if(parseInt(data[0]['add_star_balloon']) < e.target.value){
+                            document.querySelector(".txt_error").classList.add("display_flex")
+                        }else{
+                            document.querySelector(".txt_error").classList.remove("display_flex")
+                        }
+                    })
+                    signature_list.push(data[i])
                 }else{
-                    document.querySelector(".txt_error").classList.remove("display_flex")
+                    if(parseInt(data[i]['add_star_balloon']) < document.querySelector(".put_star_balloon input").value){
+                        document.querySelector(".txt_error").classList.add("display_flex")
+                    }else{
+                        document.querySelector(".txt_error").classList.remove("display_flex")
+                    }
+                    document.querySelector(".userBalloonCount strong").textContent = data[i]['add_star_balloon']
                 }
-            })
-
-            let i = 0;
-            if(data.length > 3){
+            }
+            if(signature_list.length > 3){
                 document.querySelector(".signature_btn").classList.add("display_flex")
             }
-            while(1){
-                if(i >= data.length || i > 2){
-                    break;
-                }
-                document.querySelector(".signature_img").innerHTML += "<img class='signature' src='"+imgPath+data[i]['signature_img_path']+"' alt='"+data[i]['signature_balloon_cnt']+"'>"
-                i += 1;
-            }
+            signature_load()
         })
 
         document.querySelector(".modal_head img").addEventListener("click",() => {
@@ -124,13 +126,62 @@
         document.querySelector(".giftBalloon h2").addEventListener("click",() => {
             document.querySelector(".modal").classList.add("display_flex")
         })
+        document.querySelector(".prev").addEventListener("click",()=>{
+            if(document.querySelector(".prev").classList.contains("on")){
+                document.querySelector(".signature_btn").title = parseInt(document.querySelector(".signature_btn").title) - 3
+                signature_load()
+            }
+        })
+        document.querySelector(".next").addEventListener("click",()=>{
+            if(document.querySelector(".next").classList.contains("on")){
+                document.querySelector(".signature_btn").title = parseInt(document.querySelector(".signature_btn").title) + 3
+                signature_load()
+            }
+        })
+        document.querySelector(".btn_gift").addEventListener("click",()=>{
+            axios.post("/api/gift_balloon_action",{
+                "star_balloon":document.querySelector(".put_star_balloon input").value,
+                "get_user_id":props.user_id
+            })
+            .then((req)=>{
+                if(req.status == 200){
+                    window.close()
+                }else{
+                    console.log(re.data)
+                }
+            })
+        })
+        document.querySelector(".btn_cancel").addEventListener("click",()=>{
+            window.close()
+        })
+        function signature_load(){
+            let start = parseInt(document.querySelector(".signature_btn").title)
+            let end = start+3 > signature_list.length ? signature_list.length : start+3
+            let t = ""
+            for(let i=start;i<end;i++){
+                if(signature_list[i]['signature_img_path']!=null)
+                t += "<img style='width: 146px;height: 123px;box-sizing: border-box;cursor: pointer;' class='signature' src='"+imgPath+signature_list[i]['signature_img_path']+"' alt='"+signature_list[i]['signature_balloon_cnt']+"'>"
+            }
+            document.querySelector(".signature_img").innerHTML = t
+            if(signature_list.length > parseInt(document.querySelector(".signature_btn").title) + 3){
+                document.querySelector(".next").classList.add("on")
+            }else{
+                document.querySelector(".next").classList.remove("on")
+            }
+            if(parseInt(document.querySelector(".signature_btn").title) == 0){
+                document.querySelector(".prev").classList.remove("on")
+            }else{
+                document.querySelector(".prev").classList.add("on")
+            }
+            document.querySelector(".signature_btn").title = start
+        }
     })
 </script>
 
 <style scoped>
     .giftBalloon_back{
         width: 100%;
-        height: 100%;
+        height: 100vh;
         background: #fff;
         color: #414141;
     }
@@ -138,7 +189,6 @@
         display: flex;
         flex-flow: column;
         align-items: center;
-        justify-content: center;
         width: 500px;
         height: 520px;
         font-size: 11px;
@@ -187,9 +237,9 @@
     .giftBalloon .star_list{
         margin-bottom: 10px;
         width: 100%;
-        padding: 0px 20px;
+        padding: 13px 20px 0px 20px;
         box-sizing: border-box;
-        margin-top: 20px;
+        min-height: 43px;
     }
     .giftBalloon .star_list p{
         margin: 0 0 0 0;
@@ -220,7 +270,7 @@
         display: none;
         align-items: center;
         justify-content: center;
-        gap: 0 10px;
+        gap: 0 3px;
     }
     .giftBalloon .signature_btn.display_flex{
         display: flex;
