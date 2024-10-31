@@ -4,7 +4,7 @@
             <div class="btn_flexible"><button></button></div>
             <div class="logo_wrap">
                 <a href="#" target="_self">
-                    <img src="soop_logo.svg">
+                    <img src="/soop_logo.svg">
                 </a>
             </div>
             <div class="top_searcharea_wrap">
@@ -17,7 +17,7 @@
             <div class="serviceUtil">
                 <div><button class="btn-broadcast"></button></div>
                 <div><button class="btn-notice"></button></div>
-                <div><img src="profile_coffee.JPG" class="profile-img"></div>
+                <div><img src="/profile_coffee.JPG" class="profile-img"></div>
                 <div><button class="btn-allMenu"></button></div>
             </div>
         </header>
@@ -786,6 +786,14 @@
 </template>
 
 <script setup>
+    import axios from "axios";
+    import { onMounted, defineProps, inject } from "vue";
+    const props = defineProps({
+        live_id:String,
+    })
+    onMounted(()=>{
+        
+    })
 </script>
 
 <style scope>

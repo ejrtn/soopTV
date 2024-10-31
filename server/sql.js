@@ -97,9 +97,13 @@ module.exports = {
                         +   " b.signature_img_path as signature_img_path,"
                         +   " b.signature_balloon_cnt as signature_balloon_cnt"
                         + " from `user` a"
-                        + " inner join signature b"
+                        + " left join signature b"
                         + " on a.user_id = b.user_id"
-                        + " where a.user_id = 'test1';",
+                        + " where a.user_id = ? or a.user_id = ?"
+                        + " order by b.signature_balloon_cnt asc",
+
+        update_get_star_balloon : "UPDATE `user` SET get_star_balloon = get_star_balloon + ? where user_id = ?;",
+        update_add_star_balloon : "UPDATE `user` SET add_star_balloon = add_star_balloon - ? where user_id = ?;",
     },
 
     bj_viewers : {
@@ -190,6 +194,11 @@ module.exports = {
                             + " from soop.passionate_user_list a"
                             + " inner join soop.`user` b"
                             + " on a.passionate_user_id = b.user_id"
-                            + " where a.user_id = ?"
-    }  
+                            + " where a.user_id = ?;"
+    },
+    live_star_balloon_open_list : {
+        insert_live_star_balloon_open_list : "INSERT INTO live_star_balloon_open_list(gift_user_id,get_user_id,star_balloon_cnt) values(?,?,?);",
+
+        sum_star_balloon : "SELECT gift_user_id, get_user_id, sum(star_balloon_cnt) from live_star_balloon_open_list where gift_user_id = ? and get_user_id = ?;"
+    }
 }

@@ -3,6 +3,11 @@ var router = express.Router();
 const sql = require("./sql.js")
 const conn = require("./db.js");
 
+router.get("/",function(req){
+    req.session.user_id = 'test1'
+    console.log(req.session.user_id)
+})
+
 router.get('/user_id_check/:user_id', function(req, res, next) {
     conn.query(sql['user']['user_id_check'],[req.params.user_id,req.params.user_id,req.params.user_id],(err,rows) => {
         res.send({'result':rows})
@@ -29,12 +34,20 @@ router.post('/user_insert', function(req, res, next) {
 
 router.post('/user_login_check', function(req, res, next) {
     conn.query(sql['user']['user_login_check'],[req.body.user_id,req.body.user_password],(err,rows) => {
-        res.send({'result':rows})
+        req.session.user = req.body.user_id;
+        req.session.save((err) => {
+            if (err) {
+                return res.status(500).send("<h1>500 error</h1>");
+            }
+            res.send({'result':rows})
+        });
+        
     })
 });
 
 
 router.get('/user_channel_info/:user_id', function(req, res, next) {
+    
     conn.query(sql['user']['user_channel_info'],[req.params.user_id],(err,rows) => {
         res.send({'result':rows})
     })
@@ -56,10 +69,27 @@ router.get('/passionate_user_list/:user_id', function(req,res,next) {
 })
 
 router.get("/gift_balloon/:user_id", function(req,res,next) {
-    
-    conn.query(sql['user']['gift_balloon'],[req.params.user_id],(err,rows) => {
+    conn.query(sql['user']['gift_balloon'],[req.params.user_id,req.session.user],(err,rows) => {
         res.send({'result':rows})
     })
+})
+
+router.post("/gift_balloon_action", function(req,res,next) {
+    const new_sql = sql['user']['update_add_star_balloon']
+                +sql['user']['update_get_star_balloon']
+                +sql['live_star_balloon_open_list']['insert_live_star_balloon_open_list']
+    conn.query(new_sql,[
+        req.body.star_balloon,
+        req.session.user,
+        req.body.star_balloon,
+        req.body.get_user_id,
+        req.session.user,
+        req.body.get_user_id,
+        req.body.star_balloon,
+    ],(err,rows) => {
+        res.send({'result':rows.status})
+    })
+    
 })
 
 module.exports = router;
