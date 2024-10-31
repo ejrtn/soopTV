@@ -4,6 +4,7 @@ import MainView from '../components/mainView.vue'
 import SoopJoin from '../components/soopJoin.vue'
 import SoopJoinInsert from '../components/soopJoinInsert.vue'
 import PersonalChannel from '../components/personalChannel.vue'
+import LivePlayer from '../components/livePlayer.vue'
 import GiftBalloon from '../components/giftBalloon.vue'
 
 const routes = [
@@ -41,6 +42,12 @@ const routes = [
         path: '/gift_balloon/:user_id',
         name: 'giftBalloon',
         component: GiftBalloon,
+        props: true,
+    },
+    {
+        path: '/live_player/:live_id',
+        name: 'livePlayer',
+        component: LivePlayer,
         props: true,
     }
 ]

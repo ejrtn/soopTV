@@ -1,6 +1,6 @@
 <template>
     <div class="soopJoin_main">
-        <img src="soop_logo.svg" class="logo">
+        <img src="/soop_logo.svg" class="logo">
         <p class="info">회원가입 후 다양한 서비스를 즐겨보세요.</p>
         <button class="join_btn" id="join">회원가입</button>
         <div class="easy_join"><span>간편회원가입</span></div>
