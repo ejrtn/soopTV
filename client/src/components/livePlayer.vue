@@ -44,40 +44,63 @@
                     </div>
                     <div class="chating">
                         <div class="chat_area">
+                            
                             <div class="chatting-list-item">
-                                <button class="message-container">
-                                    <span tip="팬클럽" class="thumb"></span>
-                                    <span tip="팬클럽" class="fan"></span>
-                                    <span class="username">test1</span>
-                                </button>
-                                <span class="message-text">ddddd</span>
+                                <div class="username">
+                                    <button>
+                                        <span tip="팬클럽" class="thumb"></span>
+                                        <span tip="팬클럽" class="fan"></span>
+                                        <span class="author">test1</span>
+                                    </button>
+                                </div>
+                                <div class="message-text"><p class="msg">ddddd</p></div>
                             </div>
                             <div class="chatting-list-item">
-                                <button class="message-container">
-                                    <span tip="팬클럽" class="fan"></span>
-                                    <span class="username">test2</span>
-                                </button>
-                                <span class="message-text">ㅇㄻ호ㅓ안ㄹ횐아ㅓdfgjnsdflgkㄹ홍aaaaaa</span>
+                                <div class="username">
+                                    <button>
+                                        <span tip="팬클럽" class="fan"></span>
+                                        <span class="author">test2</span>
+                                    </button>
+                                </div>
+                                <div class="message-text"><p class="msg">jhfdlkjsdhkfjㅇㄻ호ㅓ안ㄹ횐아ㅓdfgjnsdflgkㄹ홍aaaaaa</p></div>
+                            </div>
+                            <div class="star_balloon-list-item">
+                                <div class="balloon_img">
+                                    <span><em count="1234000">1234000</em></span>
+                                    <img src="/ba_step.png">
+                                </div>
+                                <div class="message-text">
+                                    <span class="username">코히.</span>
+                                    <span class="star_balloon_cnt">별풍선 <em>1234000</em>개</span>
+                                </div>
+                                <div class="balloon_img_bottom"></div>
+                            </div>
+
+                            <div class="chatting-list-item">
+                                <div class="username">
+                                    <button>
+                                        <span tip="열혈팬" class="vip"></span>
+                                        <span class="author">test3</span>
+                                    </button>
+                                </div>
+                                <div class="message-text"><p class="msg">bbbbbbbbb</p></div>
                             </div>
                             <div class="chatting-list-item">
-                                <button class="message-container">
-                                    <span tip="열혈팬" class="vip"></span>
-                                    <span class="username">test3</span>
-                                </button>
-                                <span class="message-text">bbbbbbbbb</span>
+                                <div class="username">
+                                    <button>
+                                        <span tip="매니저" class="manager"></span>
+                                        <span class="author">test4</span>
+                                    </button>
+                                </div>
+                                <div class="message-text"><p class="msg">xxxxxxx</p></div>
                             </div>
                             <div class="chatting-list-item">
-                                <button class="message-container">
-                                    <span tip="매니저" class="manager"></span>
-                                    <span class="username">test4</span>
-                                </button>
-                                <div class="message-text">xxxxxxx</div>
-                            </div>
-                            <div class="chatting-list-item">
-                                <button class="message-container">
-                                    <span class="username">test5</span>
-                                </button>
-                                <span class="message-text">zzzzzz</span>
+                                <div class="username">
+                                    <button>
+                                        <span class="author">test5</span>
+                                    </button>
+                                </div>
+                                <div class="message-text"><p class="msg">zzzzzz</p></div>
                             </div>
                         </div>
                     </div>
@@ -182,6 +205,28 @@
 </script>
 
 <style scoped>
+    :root{
+        --nickname-ramdom-color1: #E12E2E;
+        --nickname-ramdom-color2: #A90A0A;
+        --nickname-ramdom-color3: #EB500D;
+        --nickname-ramdom-color4: #C25111;
+        --nickname-ramdom-color5: #E07E0A;
+        --nickname-ramdom-color6: #B26C03;
+        --nickname-ramdom-color7: #648E0B;
+        --nickname-ramdom-color8: #119937;
+        --nickname-ramdom-color9: #158304;
+        --nickname-ramdom-color10: #047143;
+        --nickname-ramdom-color11: #0799B9;
+        --nickname-ramdom-color12: #0B6D82;
+        --nickname-ramdom-color13: #0C80D3;
+        --nickname-ramdom-color14: #0C61E1;
+        --nickname-ramdom-color15: #1915BF;
+        --nickname-ramdom-color16: #6518C8;
+        --nickname-ramdom-color17: #AD19E1;
+        --nickname-ramdom-color18: #DD32E0;
+        --nickname-ramdom-color19: #DC3585;
+        --nickname-ramdom-color20: #C40F70;
+    }
     .live_player .live_player_body{
         padding: 8px 24px 0;
         margin: 64px auto 0;
@@ -202,7 +247,8 @@
         height: 670px;
     }
     .live_player .live_player_body .wrapping{
-        width: 350px;
+        width: 390px;
+        flex-shrink: 0;
     }
     .live_player .live_player_body .setting_chating{
         min-height: 500px;
@@ -265,7 +311,7 @@
         padding: 16px 20px 16px 20px;
         box-sizing: border-box;
         line-height: 1.2;
-        gap:10px 0px;
+        gap:5px 0px;
     }
     .live_player .live_player_body .wrapping .gift_input{
         padding: 10px;
@@ -371,23 +417,19 @@
     .live_player .chatting-list-item{
         font-size: 14px;
         color: #e2e4e9;
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        word-break: break-all;
     }
-    .live_player .chatting-list-item .message-container{
-        display: inline-flex;
-        align-items: center;
-        gap: 0 3px;
-        background: transparent;
-        border: none;
-        outline: none;
-        color: #e2e4e9;
-        padding: 0;
-    }
-    .live_player .chatting-list-item .message-container .thumb{
+    
+    .live_player .chatting-list-item .thumb{
         background: url("/public/signature-default.svg") 50% 50% no-repeat;
         background-size: 20px 18px;
         width: 20px;
         height: 18px;
         display: inline-block;
+        vertical-align: middle;
     }
     .live_player .chatting-list-item .fan{
         background: url("/public/fan.svg") 50% 50% no-repeat;
@@ -395,27 +437,172 @@
         width: 15px;
         height: 15px;
         display: inline-block;
+        vertical-align: middle;
     }
-    .live_player .chatting-list-item .message-container .vip{
+    .live_player .chatting-list-item .vip{
         background: url("/public/vip.svg") 50% 50% no-repeat;
         background-size: 15px 15px;
         width: 15px;
         height: 15px;
         display: inline-block;
+        vertical-align: middle;
     }
-    .live_player .chatting-list-item .message-container .manager{
+    .live_player .chatting-list-item .manager{
         background: url("/public/manager.svg") 50% 50% no-repeat;
         background-size: 15px 15px;
         width: 15px;
         height: 15px;
         display: inline-block;
+        vertical-align: middle;
     }
     .live_player .chatting-list-item .username{
-        margin-right: 4px;
-        height: 15px;
         display: inline-block;
+        position: relative;
+        margin-right: 3px;
+        font-size: 0;
+        vertical-align: middle;
     }
-    .live_player .chatting-list-item .message-container .message-text{
+    .live_player .chatting-list-item .username .author{
+        font-weight: 600;
+        vertical-align: middle;
+        line-height: 20px;
+        font-size: 14px;
         color: #e2e4e9;
     }
+    .live_player .chatting-list-item .username .author.random-color1{color: var(--nickname-ramdom-color1);}
+    .live_player .chatting-list-item .username .author.random-color2{color: var(--nickname-ramdom-color2);}
+    .live_player .chatting-list-item .username .author.random-color3{color: var(--nickname-ramdom-color3);}
+    .live_player .chatting-list-item .username .author.random-color4{color: var(--nickname-ramdom-color4);}
+    .live_player .chatting-list-item .username .author.random-color5{color: var(--nickname-ramdom-color5);}
+    .live_player .chatting-list-item .username .author.random-color6{color: var(--nickname-ramdom-color6);}
+    .live_player .chatting-list-item .username .author.random-color7{color: var(--nickname-ramdom-color7);}
+    .live_player .chatting-list-item .username .author.random-color8{color: var(--nickname-ramdom-color8);}
+    .live_player .chatting-list-item .username .author.random-color9{color: var(--nickname-ramdom-color9);}
+    .live_player .chatting-list-item .username .author.random-color10{color: var(--nickname-ramdom-color10);}
+    .live_player .chatting-list-item .username .author.random-color11{color: var(--nickname-ramdom-color11);}
+    .live_player .chatting-list-item .username .author.random-color12{color: var(--nickname-ramdom-color12);}
+    .live_player .chatting-list-item .username .author.random-color13{color: var(--nickname-ramdom-color13);}
+    .live_player .chatting-list-item .username .author.random-color14{color: var(--nickname-ramdom-color14);}
+    .live_player .chatting-list-item .username .author.random-color15{color: var(--nickname-ramdom-color15);}
+    .live_player .chatting-list-item .username .author.random-color16{color: var(--nickname-ramdom-color16);}
+    .live_player .chatting-list-item .username .author.random-color17{color: var(--nickname-ramdom-color17);}
+    .live_player .chatting-list-item .username .author.random-color18{color: var(--nickname-ramdom-color18);}
+    .live_player .chatting-list-item .username .author.random-color19{color: var(--nickname-ramdom-color19);}
+    .live_player .chatting-list-item .username .author.random-color20{color: var(--nickname-ramdom-color20);}
+
+    .live_player .chatting-list-item .username button{
+        display: inline-block;
+        text-align: left;
+        line-height: 20px;
+        font-size: 0;
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+        outline: none;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+    }
+    .live_player .chatting-list-item .username button span{
+        margin-right: 2px;
+    }
+    .live_player .chatting-list-item .message-text{
+        color: #c9c9c9;
+        display: inline;
+        vertical-align: middle;
+    }
+    .live_player .chatting-list-item .message-text .msg{
+        line-height: 22px;
+        display: inline;
+        margin: 0;
+        padding: 0;
+    }
+    .live_player .star_balloon-list-item{
+        display: flex;
+        align-items: flex-end;
+        width: 100%;
+        justify-content: center;
+        position: relative;
+        margin: 5px 0px;
+    }
+    .live_player .star_balloon-list-item .balloon_img_bottom{
+        background: #001C38;
+        height: 52px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border: 1px solid rgba(1,130,255,.1);
+        border-radius: 10px;
+    }
+    .live_player .star_balloon-list-item .balloon_img{
+        position: relative;
+        margin-right: 5px;
+        z-index: 1;
+    }
+    .live_player .star_balloon-list-item .balloon_img span{
+        position: absolute;
+        top: -13px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: 1;
+        font-size: inherit;
+    }
+    .live_player .star_balloon-list-item .balloon_img em{
+        color: #ff2f00;
+        font-size: 23px;
+        font-weight: bold;
+        white-space: nowrap;
+        line-height: 1.8;
+        
+        font-style: normal;
+    }
+    .live_player .star_balloon-list-item .balloon_img em::before{
+        content: attr(count);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-text-stroke: 4px #fff;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        z-index: -1;
+    }
+    .live_player .star_balloon-list-item .balloon_img em::after{
+        content: attr(count);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-text-stroke: 6px #000;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        z-index: -2;
+    }
+    .live_player .star_balloon-list-item .balloon_img img{
+        width: 160px;
+        height: 100px;
+    }
+    .live_player .star_balloon-list-item .message-text{
+        color:#d5d7dc;
+        font-size: 13px;
+        display: flex;
+        flex-flow: column;
+        margin-bottom: 12px;
+        z-index: 1;
+    }
+    .live_player .star_balloon-list-item .message-text .username{
+        font-size: 12px;
+        color: #d5d7dc;
+    }
+    .live_player .star_balloon-list-item .message-text .star_balloon_cnt{
+        color: #e2e4e9;
+        font-style: normal;
+        font-weight: 600;
+    }
+    .live_player .star_balloon-list-item .message-text .star_balloon_cnt em{
+        color: #44a3ff;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+
 </style>
