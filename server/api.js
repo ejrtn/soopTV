@@ -92,4 +92,15 @@ router.post("/gift_balloon_action", function(req,res,next) {
     
 })
 
+router.post("/bj_viewers_chat", function(req,res,next) {
+    conn.query(sql['bj_viewers']['bj_viewers_chat'],[req.body.user_id,req.session.user],(err,rows) => {
+        res.send({'result':rows})
+    })
+})
+
+router.post("/live_user_info", function(req,res,next) {
+    conn.query(sql['user']['live_user_info'],[req.body.user_id,req.body.user_id],(err,rows) => {
+        res.send({'result':rows})
+    })
+})
 module.exports = router;

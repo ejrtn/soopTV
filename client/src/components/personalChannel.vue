@@ -441,6 +441,7 @@
 </template>
 
 <script setup>
+    
     import axios from "axios";
     import { onMounted, defineProps, inject } from "vue";
     const props = defineProps({
@@ -631,6 +632,8 @@
             }
         })
     })
+
+
 </script>
 
 <style scope>

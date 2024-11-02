@@ -104,9 +104,30 @@ module.exports = {
 
         update_get_star_balloon : "UPDATE `user` SET get_star_balloon = get_star_balloon + ? where user_id = ?;",
         update_add_star_balloon : "UPDATE `user` SET add_star_balloon = add_star_balloon - ? where user_id = ?;",
+        live_user_info : "SELECT"
+                            + " a.user_id,"
+                            + " a.live_id,"
+                            + " a.live_title,"
+                            + " a.category,"
+                            + " a.up_cnt,"
+                            + " b.user_nickname,"
+                            + " b.star_cnt,"
+                            + " b.subscribe_cnt,"
+                            + " b.profile_path,"
+                            + " (select GROUP_CONCAT(tag) from live_info_tag where live_id = ?) as sub_tag"
+                        +" from live_info a"
+                        +" inner join user b"
+                        +" on a.user_id = b.user_id"
+                        +" where a.user_id = ?;",
     },
 
     bj_viewers : {
+        bj_viewers_chat : "select a.user_id1, a.user_id2, b.user_name, a.subscribe_yn, a.subscribe_month_cnt, a.fan_yn"
+                            + " from bj_viewers a"
+                            + " inner join user b"
+                            + " on a.user_id2 = b.user_id"
+                            + " where a.user_id1 = 'test2' and a.user_id2 = 'test1';",
+
         bj_viewers_star_user_id_insert : "INSERT INTO soop.`bj_viewers` (user_id, star_user_id) VALUES(?,?)",
         
         bj_viewers_hiding_user_id_insert : "INSERT INTO soop.`bj_viewers` (user_id, hiding_user_id) VALUES(?,?)",

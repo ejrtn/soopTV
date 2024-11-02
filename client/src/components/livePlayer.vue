@@ -17,7 +17,7 @@
             <div class="serviceUtil">
                 <div><button class="btn-broadcast"></button></div>
                 <div><button class="btn-notice"></button></div>
-                <div><img src="/profile_coffee.JPG" class="profile-img"></div>
+                <div><img src="/profile_coffee.JPG" class="profile-img" alt="test1"></div>
                 <div><button class="btn-allMenu"></button></div>
             </div>
         </header>
@@ -27,9 +27,31 @@
                     <video src=""></video>
                 </div>
                 <div class="player_info">
-                    <div></div>
-                    <span></span>
-                    <div></div>
+                    <div class="user_info">
+                        <div>
+                            <img src="" class="profile">
+                            <span class="nickname"></span>
+                            <span class="subscribe" tip="구독"></span>
+                            <span class="star" tip="즐겨찾기"></span>
+                            <span class="up_cnt" tip="up"></span>
+                        </div>
+                        <div>
+                            <button class="star_balloon" tip="별풍선"></button>
+                            <button class="ad_balloon" tip="애드벌룬"></button>
+                            <button class="sticker" tip="스티커"></button>
+                            <button class="catch" tip="유저클립 & Catch"></button>
+                            <button class="share" tip="공유하기"></button>
+                            <button class="more"  tip="더 보기"></button>
+                        </div>
+                    </div>
+                    <div class="live_info">
+                        <span class="title"></span>
+                        <div class="user_time">
+                            <span class="user_cnt"></span>
+                            <span class="time"></span>
+                        </div>
+                    </div>
+                    <div class="tag"></div>
                 </div>
             </div>
             <div class="wrapping">
@@ -135,12 +157,71 @@
 </template>
 
 <script setup>
+    import { io } from "socket.io-client";
     import axios from "axios";
     import { onMounted, defineProps, inject } from "vue";
     const props = defineProps({
         live_id:String,
     })
+    let user_info = {}
     onMounted(()=>{
+        let imgPath = inject("imgPath")['_value']
+        axios.post("/api/live_user_info",{
+            user_id:props.live_id
+        }).then((req)=>{
+            const data = req.data.result[0];
+            document.querySelector(".profile").src=imgPath+data.profile_path
+            document.querySelector(".nickname").textContent=data.user_nickname
+            document.querySelector(".subscribe").textContent=data.subscribe_cnt
+            let t = ''
+            let arr = data.star_cnt.toString().split("")
+            if(arr.length >= 5){
+                for(let a=0;a<arr.length-3;a++){
+                    if(a==arr.length-4) t += '.'
+                    t += arr[a];
+                }
+                t += "만"
+            }else if(arr.length >= 4){
+                for(let a=0;a<arr.length-3;a++){
+                    t += arr[a];
+                }
+                t += "천"
+            }else{
+                t = data.star_cnt
+            }
+            document.querySelector(".star").textContent=t
+            document.querySelector(".up_cnt").textContent=data.up_cnt
+            document.querySelector(".title").textContent=data.live_title
+
+            t = ""
+            t += "<span class='category'>"+data.category+"</span>"
+            let tags = data.sub_tag.split(",")
+            for(let i=0;i<tags.length;i++){
+                t += "<span class='sub_tag'>"+data.category+"</span>"
+            }
+            document.querySelector(".tag").innerHTML = t
+        })
+
+        document.querySelector(".write_area").addEventListener("keydown",(e)=>{
+            if(e.key == 'Enter'){
+                if (!e.shiftKey){
+                    e.preventDefault();
+                    
+                    document.querySelector(".chat_enter").click()
+                }
+            }
+        })
+        
+        document.querySelector(".write_area").addEventListener("input",(e)=>{
+            if(e.target.textContent.length == 0){
+                document.querySelector(".chat_enter").classList.remove("display_block")
+                e.target.nextElementSibling.classList.remove("display_none")
+            }else{
+                document.querySelector(".chat_enter").classList.add("display_block")
+                e.target.nextElementSibling.classList.add("display_none")
+            }
+        })
+
         // 대상 Element 선택
         const resizer = document.querySelector('.move_handle');
         const topSide = resizer.parentNode;
@@ -200,11 +281,81 @@
         };
         // 마우스 down 이벤트를 등록
         resizer.addEventListener('mousedown', mouseDownHandler);
+
+        const socket = io('http://localhost:3000')
+
+        socket.on("get_chat",(msg)=>{
+            console.log(msg)
+            document.querySelector(".chat_area").innerHTML += msg
+            document.querySelector(".chat_area").parentNode.scrollTop = document.querySelector(".chat_area").scrollHeight;
+        })
+
+        socket.on("connect", (data) => {
+            socket.emit("create_room",(document.querySelector(".profile-img").alt))
+            axios.post("/api/bj_viewers_chat",{
+                user_id:props.live_id
+            }).then((req)=>{
+                const data = req.data.result[0];
+                user_info = {
+                    user_id : data.user_id2,
+                    user_name : data.user_name,
+                    subscribe_yn : data.subscribe_yn,
+                    subscribe_month_cnt : data.subscribe_month_cnt,
+                    fan_yn : data.fan_yn,
+                    vip_yn : data.vip_yn,
+                }
+            })
+        });
+
+        socket.on("disconnect", () => {
+
+        });
+        document.querySelector(".chat_enter").addEventListener("click",(e)=>{
+            let color_ran = [
+                'random-color1', 
+                'random-color2', 
+                'random-color3', 
+                'random-color4', 
+                'random-color5', 
+                'random-color6', 
+                'random-color7', 
+                'random-color8', 
+                'random-color9', 
+                'random-color10',
+                'random-color11',
+                'random-color12',
+                'random-color13',
+                'random-color14',
+                'random-color15',
+                'random-color16',
+                'random-color17',
+                'random-color18',
+                'random-color19',
+                'random-color20',
+            ]
+            let msg = '<div class="chatting-list-item">'
+                msg   +='<div class="username">'
+                    msg           +='<button>'
+                if(user_info['subscribe_yn'] == 'T') msg += '<span class="thumb"></span>'
+                if(user_info['vip_yn'] == 'T') msg += '<span class="vip"></span>'
+                else if(user_info['fan_yn'] == 'T') msg += '<span tip="팬클럽" class="fan"></span>'
+                msg               +='<span class="author '+color_ran[parseInt(Math.random()*20)]+'">'+user_info['user_name']+'</span>'
+                msg           +='</button>'
+                msg   +='</div>'
+                msg   +='<div class="message-text"><p class="msg">'+document.querySelector(".write_area").innerHTML+'</p></div>'
+                msg +='</div>'
+            document.querySelector(".write_area").textContent = ''
+            socket.emit("push_chat",msg)
+        })
     })
+    
+
+
+
     
 </script>
 
-<style scoped>
+<style scope>
     :root{
         --nickname-ramdom-color1: #E12E2E;
         --nickname-ramdom-color2: #A90A0A;
@@ -373,14 +524,21 @@
         transform: translate(0, -50%);
         color: #9196a1;
     }
+    .live_player .write div span.display_none{
+        display: none;
+    }
     .live_player .write img{
         height: 30px;
         cursor: pointer;
     }
     .live_player .write .chat_enter{
-        display: block;
+        display: none;
         cursor: pointer;
     }
+    .live_player .write .chat_enter.display_block{
+        display: block;
+    }
+    
     .live_player .move_handle {
         flex: 0 0 auto;
         background-color: rgba(0, 0, 0, 0);
@@ -604,5 +762,297 @@
         font-size: 15px;
     }
 
-
+    .live_player .player_info .user_info{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #e2e4e9;
+    }
+    .live_player .player_info .user_info div:nth-child(1){
+        display: flex;
+        align-items: center;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .profile{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .nickname{
+        font-size: 22px;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .subscribe{
+        padding: 10px 15px;
+        border: 1px solid #464a53;
+        border-radius: 10px;
+        margin-right: 5px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .subscribe:hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .subscribe::before{
+        content: "";
+        background:url("/public/subscribe.svg") 50% 50% no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .star{
+        padding: 10px 15px;
+        border: 1px solid #464a53;
+        border-radius: 10px;
+        margin-right: 5px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .star:hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .star::before{
+        content: "";
+        background:url("/public/star.svg") 50% 50% no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .up_cnt{
+        padding: 10px 15px;
+        border: 1px solid #464a53;
+        border-radius: 10px;
+        margin-right: 5px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .up_cnt:hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(1) .up_cnt::before{
+        content: "";
+        background:url("/public/up.svg") 50% 50% no-repeat;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+    .live_player .player_info .user_info div:nth-child(2){
+        display: flex;
+        align-items: center;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button{
+        color: #d5d7dc;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(1){
+        cursor: pointer;
+        background: url("/public/live_star.svg");
+        width: 36px;
+        height: 36px;
+        outline: none;
+        border: none;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(1):hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(2){
+        cursor: pointer;
+        background: url("/public/live_ad.svg");
+        width: 36px;
+        height: 36px;
+        outline: none;
+        border: none;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(2):hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(3){
+        cursor: pointer;
+        background: url("/public/live_sticker.svg");
+        width: 36px;
+        height: 36px;
+        outline: none;
+        border: none;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(3):hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(4){
+        cursor: pointer;
+        background: url("/public/live_catch.svg");
+        width: 36px;
+        height: 36px;
+        outline: none;
+        border: none;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(4):hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(5){
+        cursor: pointer;
+        background: url("/public/live_share.svg");
+        width: 36px;
+        height: 36px;
+        outline: none;
+        border: none;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(5):hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(6){
+        cursor: pointer;
+        background: url("/public/live_more.svg");
+        width: 36px;
+        height: 36px;
+        outline: none;
+        border: none;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .live_player .player_info .user_info div:nth-child(2) button:nth-child(6):hover[tip]::after{
+        content: attr(tip);
+        top: calc(100% + 6px);
+        padding: 5px 7px;
+        border-radius: 12px;
+        font-size: 13px;
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        white-space: nowrap;
+        background-color: #525661;
+        transform: translateX(-60%);
+        font-weight: 600;
+    }
+    .live_player .player_info .live_info{
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .live_player .player_info .live_info .title{
+        font-size: 19px;
+        font-weight: 600;
+    }
+    .live_player .player_info .tag{
+        margin-top: 20px;
+    }
+    .live_player .player_info .tag .category{
+        color: rgba(111, 185, 255, .8);
+        background: rgba(1,130,255,.2);
+        font-size: 11px;
+        padding: 3px 7px;
+        border-radius: 10px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .live_player .player_info .tag .sub_tag{
+        color: #9196a1;
+        background: #232529;;
+        font-size: 11px;
+        padding: 3px 7px;
+        border-radius: 10px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
 </style>

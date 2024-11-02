@@ -17,7 +17,7 @@
             <div class="serviceUtil">
                 <div><button class="btn-broadcast"></button></div>
                 <div><button class="btn-notice"></button></div>
-                <div><img src="/profile_coffee.JPG" class="profile-img"></div>
+                <div><img src="/profile_coffee.JPG" class="profile-img" alt="test1"></div>
                 <div><button class="btn-allMenu"></button></div>
             </div>
         </header>
@@ -787,12 +787,13 @@
 
 <script setup>
     import axios from "axios";
+    import { io } from "socket.io-client";
     import { onMounted, defineProps, inject } from "vue";
     const props = defineProps({
         live_id:String,
     })
     onMounted(()=>{
-        
+
     })
 </script>
 

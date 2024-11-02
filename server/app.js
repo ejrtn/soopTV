@@ -6,6 +6,7 @@ const api = require("./api.js")
 const bodyParser = require('body-parser')
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const webSocket = require("./socket");
 
 const sessionStore = new MySQLStore({
     host: process.env.DB_HOST,
@@ -21,7 +22,6 @@ app.use(session({
     store: sessionStore                                         
 }))
 
-
 app.use('/static', express.static('public'));
 app.use(bodyParser.json())
 app.use("/api",api)
@@ -30,3 +30,5 @@ server.listen(port, () => {
     console.log(`server is running on port ${port}`)
 })
 
+
+webSocket(server);
