@@ -1,5 +1,5 @@
 {
-  "name": "soop",
+  "name": "rtmpserver",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,13 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bigint-json": "^1.1.5",
-    "body-parser": "^1.20.3",
-    "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "express-mysql-session": "^3.0.3",
-    "express-session": "^1.18.1",
-    "mariadb": "^3.3.2",
-    "socket.io": "^4.8.1"
+    "fluent-ffmpeg": "^2.1.3",
+    "node-media-server": "^2.7.0"
   }
 }

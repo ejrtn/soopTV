@@ -1,5 +1,7 @@
 <template>
     <div class="soopLogin_main">
+        <video id="videoPlayer" class="videoPlayer"  webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" muted controls></video>
+        
         <img src="/soop_logo.svg" class="logo">
         <span class="recommend_login_text">로그인 후 더 많은 서비스를 즐겨보세요.</span>
         <div class="id_input">
@@ -51,18 +53,63 @@
 </template>
 
 <script setup>
+    import Hls from 'hls.js';
     import axios from "axios";
     import { onMounted } from "vue";
     onMounted(()=>{
+        const videoElement = document.querySelector("#videoPlayer")
+        // videoElement.addEventListener('loadedmetadata', () => {
+        //     videoElement.currentTime = videoElement.duration-1; // 비디오의 끝 시간으로 설정
+        // });
         document.querySelector(".logo").addEventListener("click",()=>{location.href="/"})
         document.querySelector(".login_btn").addEventListener("click",(e)=>{
             axios.post("/api/user_login_check",{
                 user_id : document.querySelector("#id").value,
                 user_password : document.querySelector("#pw").value,
             }).then((req)=>{
-                console.log(req)
+                if(req.status == 200){
+                    axios.post("/api/login_ok",{user_id : req.data[0].user_id}).then((req)=>{
+                    })
+                }
             })
         })
+
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            
+            // HLS 스트리밍 URL을 로드
+            hls.loadSource('http://localhost:8000/live/stream1/index.m3u8'); // 실제 HLS URL을 넣으세요
+            hls.attachMedia(videoElement);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                
+                videoElement.play(); // 스트리밍 로드가 완료되면 자동으로 재생
+                // videoElement.muted = false
+                console.log(videoElement.muted)
+            });
+            // 에러 처리
+            hls.on(Hls.Events.ERROR, (event, data) => {
+                if (data.fatal) {
+                switch (data.type) {
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                    console.error('네트워크 오류 발생');
+                    break;
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                    console.error('미디어 오류 발생');
+                    break;
+                    case Hls.ErrorTypes.OTHER_ERROR:
+                    console.error('기타 오류 발생');
+                    break;
+                    default:
+                    break;
+                }
+                }
+            });
+        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+            // 브라우저가 HLS.js 없이 native HLS를 지원하는 경우 (예: Safari)
+            videoElement.src = 'http://localhost:8000/live/stream1/index.m3u8';
+        } else {
+            console.error('HLS를 지원하지 않는 브라우저입니다.');
+        }
     })
 </script>
 
@@ -209,5 +256,9 @@
         font-size: 10px;
         color: rgba(117, 123, 138, 0.2);
         margin: 0px 10px;
+    }
+
+    .videoPlayer{
+        width: 400px;
     }
 </style>

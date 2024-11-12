@@ -92,7 +92,7 @@ module.exports = {
 
         gift_balloon : "SELECT"
                         +   " a.user_id as user_id,"
-                        +   " a.user_name as user_name,"
+                        +   " a.user_nickname as user_nickname,"
                         +   " a.add_star_balloon as add_star_balloon,"
                         +   " b.signature_img_path as signature_img_path,"
                         +   " b.signature_balloon_cnt as signature_balloon_cnt"
@@ -103,7 +103,8 @@ module.exports = {
                         + " order by b.signature_balloon_cnt asc",
 
         update_get_star_balloon : "UPDATE `user` SET get_star_balloon = get_star_balloon + ? where user_id = ?;",
-        update_add_star_balloon : "UPDATE `user` SET add_star_balloon = add_star_balloon - ? where user_id = ?;",
+        minus_add_star_balloon : "UPDATE `user` SET add_star_balloon = add_star_balloon - ? where user_id = ?;",
+        plus_add_star_balloon : "UPDATE `user` SET add_star_balloon = add_star_balloon + ? where user_id = ?;",
         live_user_info : "SELECT"
                             + " a.user_id,"
                             + " a.live_id,"
@@ -119,6 +120,7 @@ module.exports = {
                         +" inner join user b"
                         +" on a.user_id = b.user_id"
                         +" where a.user_id = ?;",
+                        
     },
 
     bj_viewers : {
@@ -221,5 +223,29 @@ module.exports = {
         insert_live_star_balloon_open_list : "INSERT INTO live_star_balloon_open_list(gift_user_id,get_user_id,star_balloon_cnt) values(?,?,?);",
 
         sum_star_balloon : "SELECT gift_user_id, get_user_id, sum(star_balloon_cnt) from live_star_balloon_open_list where gift_user_id = ? and get_user_id = ?;"
+    },
+    challenge : {
+        select_challenge : "SELECT"
+                                + " a.open_user_id,"
+                                + " a.`result`,"
+                                + " a.content,"
+                                + " DATE_FORMAT(a.limit_time,'%Y년%m월%d일 %k시%i분') as limit_time,"
+                                + " sum(a.star_balloon) as star_balloon,"
+                                + " b.profile_path,"
+                                + " b.user_nickname"
+                            + " from challenge a"
+                            + " inner join user b"
+                            + " on a.open_user_id = b.user_id"
+                            + " where a.open_user_id = ? and a.bj_user_id = ?"
+                            + " GROUP by content"
+                            + " order by a.cdate;",
+        
+        insert_challenge : "INSERT INTO soop.challenge("
+                            + " open_user_id,"
+                            + " content,"
+                            + " bj_user_id,"
+                            + " star_balloon,"
+                            + " limit_time"
+                            + " ) VALUES(?,?,?,?,?);"
     }
 }

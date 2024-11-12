@@ -91,19 +91,11 @@
         let imgPath = inject("imgPath")['_value']
         axios.get("/api/gift_balloon/"+props.user_id)
         .then((req)=>{
-            const data = req.data.result
+            const data = req.data
             for(let i=0;i<data.length;i++){
                 if(data[i]['user_id'] == props.user_id){
-                    document.querySelector(".gift_at strong").textContent = data[0]['user_name']+"("+data[0]['user_id']+")"
+                    document.querySelector(".gift_at strong").textContent = data[i]['user_nickname']+"("+data[i]['user_id']+")"
                     
-                    
-                    document.querySelector(".put_star_balloon input").addEventListener("input",(e)=>{
-                        if(parseInt(data[0]['add_star_balloon']) < e.target.value){
-                            document.querySelector(".txt_error").classList.add("display_flex")
-                        }else{
-                            document.querySelector(".txt_error").classList.remove("display_flex")
-                        }
-                    })
                     signature_list.push(data[i])
                 }else{
                     if(parseInt(data[i]['add_star_balloon']) < document.querySelector(".put_star_balloon input").value){
@@ -114,6 +106,13 @@
                     document.querySelector(".userBalloonCount strong").textContent = data[i]['add_star_balloon']
                 }
             }
+            document.querySelector(".put_star_balloon input").addEventListener("input",(e)=>{
+                if(parseInt(document.querySelector(".userBalloonCount strong").textContent) < e.target.value){
+                    document.querySelector(".txt_error").classList.add("display_flex")
+                }else{
+                    document.querySelector(".txt_error").classList.remove("display_flex")
+                }
+            })
             if(signature_list.length > 3){
                 document.querySelector(".signature_btn").classList.add("display_flex")
             }
@@ -142,8 +141,7 @@
             axios.post("/api/gift_balloon_action",{
                 "star_balloon":document.querySelector(".put_star_balloon input").value,
                 "get_user_id":props.user_id
-            })
-            .then((req)=>{
+            }).then((req)=>{
                 if(req.status == 200){
                     window.close()
                 }else{

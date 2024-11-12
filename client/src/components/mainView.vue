@@ -929,6 +929,7 @@
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
         background: #0c0d0e;
+        z-index: 10;
     }
     .mainView .serviceLnb::-webkit-scrollbar {
         display: none; /* Chrome, Safari, Opera*/
@@ -1061,6 +1062,7 @@
         border-radius: 50px 0px 0px 20px;
         cursor: pointer;
         overflow: hidden;
+        background: url("https://img-display.sooplive.co.kr/creatives/image/20241104/62711/62711.jpg");
     }
     .mainView .player_wrap .poster video{
         width: 100%;

@@ -82,7 +82,7 @@
             }else{
                 axios.get("/api/user_id_check/"+e.target.value+"/")
                 .then((req)=>{
-                    if(req.data.result.length<1){
+                    if(req.data.length<1){
                         day_check(e)
                         e.target.parentNode.classList.remove("background_red_x_btn")
                         e.target.parentNode.classList.add("background_blue_check")

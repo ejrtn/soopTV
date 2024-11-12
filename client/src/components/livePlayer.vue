@@ -92,7 +92,7 @@
                                     <img src="/ba_step.png">
                                 </div>
                                 <div class="message-text">
-                                    <span class="username">코히.</span>
+                                    <span class="nickname">코히.</span>
                                     <span class="star_balloon_cnt">별풍선 <em>1234000</em>개</span>
                                 </div>
                                 <div class="balloon_img_bottom"></div>
@@ -152,7 +152,11 @@
                 </div>
                 <div class="vod_list"></div>
             </div>
-        </div>   
+        </div>
+
+        <div class="modal">
+            <liveModalVue :user_id="props.user_id"/>
+        </div>
     </div>
 </template>
 
@@ -160,16 +164,92 @@
     import { io } from "socket.io-client";
     import axios from "axios";
     import { onMounted, defineProps, inject } from "vue";
+    import liveModalVue from "./liveModal.vue";
+
     const props = defineProps({
-        live_id:String,
+        user_id:String,
     })
     let user_info = {}
+    let signature_list = []
+    let session_user = []
     onMounted(()=>{
+
         let imgPath = inject("imgPath")['_value']
+        axios.get("/api/gift_balloon/"+props.user_id)
+        .then((req)=>{
+            const data = req.data
+            for(let i=0;i<data.length;i++){
+                if(data[i]['user_id'] == props.user_id){
+                    document.querySelector(".gift_at strong").textContent = data[0]['user_nickname']+"("+data[0]['user_id']+")"
+                    signature_list.push(data[i])
+                }else{
+                    session_user.push(data[i])
+                    if(parseInt(data[i]['add_star_balloon']) < document.querySelector(".star_input input").value){
+                        document.querySelector(".txt_error").classList.add("display_flex")
+                    }else{
+                        document.querySelector(".txt_error").classList.remove("display_flex")
+                    }
+                    document.querySelector(".userBalloonCount strong").textContent = data[i]['add_star_balloon']
+                    document.querySelector(".sub_modal .sub_modal_body em").textContent = data[i]['add_star_balloon']
+                }
+            }
+            document.querySelector(".star_input input").addEventListener("input",(e)=>{
+                if(parseInt(document.querySelector(".userBalloonCount strong").textContent) < e.target.value){
+                    document.querySelector(".txt_error").classList.add("display_flex")
+                }else{
+                    document.querySelector(".txt_error").classList.remove("display_flex")
+                }
+            })
+            if(signature_list.length > 3){
+                document.querySelector(".prev").classList.add("display_flex")
+                document.querySelector(".next").classList.add("display_flex")
+            }
+            signature_load()
+        })
+        document.querySelectorAll(".btn_area button")[0].addEventListener("click",()=>{
+            document.querySelector(".modal").classList.remove('display_flex')
+        })
+        
+        document.querySelector(".prev").addEventListener("click",()=>{
+            if(document.querySelector(".prev").classList.contains("on")){
+                document.querySelector(".signature_btn").title = parseInt(document.querySelector(".signature_btn").title) - 3
+                signature_load()
+            }
+        })
+        document.querySelector(".next").addEventListener("click",()=>{
+            if(document.querySelector(".next").classList.contains("on")){
+                document.querySelector(".signature_btn").title = parseInt(document.querySelector(".signature_btn").title) + 3
+                signature_load()
+            }
+        })
+        function signature_load(){
+            let start = parseInt(document.querySelector(".signature_btn").title)
+            let end = start+3 > signature_list.length ? signature_list.length : start+3
+            let t = ""
+            for(let i=start;i<end;i++){
+                if(signature_list[i]['signature_img_path']!=null)
+                t += "<img class='signature' src='"+imgPath+signature_list[i]['signature_img_path']+"' alt='"+signature_list[i]['signature_balloon_cnt']+"'>"
+            }
+            document.querySelector(".signature_img").innerHTML = t
+            if(signature_list.length > parseInt(document.querySelector(".signature_btn").title) + 3){
+                document.querySelector(".next").classList.add("on")
+            }else{
+                document.querySelector(".next").classList.remove("on")
+            }
+            if(parseInt(document.querySelector(".signature_btn").title) == 0){
+                document.querySelector(".prev").classList.remove("on")
+            }else{
+                document.querySelector(".prev").classList.add("on")
+            }
+            document.querySelector(".signature_btn").title = start
+        }
+
+        
+        
         axios.post("/api/live_user_info",{
-            user_id:props.live_id
+            user_id:props.user_id
         }).then((req)=>{
-            const data = req.data.result[0];
+            const data = req.data[0];
             document.querySelector(".profile").src=imgPath+data.profile_path
             document.querySelector(".nickname").textContent=data.user_nickname
             document.querySelector(".subscribe").textContent=data.subscribe_cnt
@@ -195,9 +275,11 @@
 
             t = ""
             t += "<span class='category'>"+data.category+"</span>"
-            let tags = data.sub_tag.split(",")
-            for(let i=0;i<tags.length;i++){
-                t += "<span class='sub_tag'>"+data.category+"</span>"
+            if(data.sub_tag != null){
+                let tags = data.sub_tag.split(",")
+                for(let i=0;i<tags.length;i++){
+                    t += "<span class='sub_tag'>"+data.category+"</span>"
+                }
             }
             document.querySelector(".tag").innerHTML = t
         })
@@ -285,7 +367,6 @@
         const socket = io('http://localhost:3000')
 
         socket.on("get_chat",(msg)=>{
-            console.log(msg)
             document.querySelector(".chat_area").innerHTML += msg
             document.querySelector(".chat_area").parentNode.scrollTop = document.querySelector(".chat_area").scrollHeight;
         })
@@ -293,9 +374,9 @@
         socket.on("connect", (data) => {
             socket.emit("create_room",(document.querySelector(".profile-img").alt))
             axios.post("/api/bj_viewers_chat",{
-                user_id:props.live_id
+                user_id:props.user_id
             }).then((req)=>{
-                const data = req.data.result[0];
+                const data = req.data[0];
                 user_info = {
                     user_id : data.user_id2,
                     user_name : data.user_name,
@@ -347,6 +428,45 @@
             document.querySelector(".write_area").textContent = ''
             socket.emit("push_chat",msg)
         })
+
+        document.querySelector(".put_balloon img").addEventListener("click",()=>{
+            document.querySelector(".modal").classList.add('display_flex')
+        })
+        document.querySelector(".star_balloon").addEventListener("click",()=>{
+            document.querySelector(".modal").classList.add('display_flex')
+        })
+
+        document.querySelectorAll(".btn_area button")[1].addEventListener("click",()=>{
+            if(!document.querySelector(".txt_error").classList.contains("display_flex")){
+                const star_balloon = document.querySelector(".star_input input").value
+                axios.post("/api/gift_balloon_action",{
+                    "star_balloon":star_balloon,
+                    "get_user_id":props.user_id
+                }).then((req)=>{
+                    if(req.status == 200){
+                        document.querySelector(".modal").classList.remove('display_flex')
+                        document.querySelector(".userBalloonCount strong").textContent = parseInt(document.querySelector(".userBalloonCount strong").textContent) - star_balloon
+                        document.querySelector(".sub_modal .sub_modal_body em").textContent = parseInt(document.querySelector(".sub_modal .sub_modal_body em").textContent) - star_balloon
+                        let msg = '<div class="star_balloon-list-item">'
+                                    + '<div class="balloon_img">'
+                                    +    '<span><em count="'+star_balloon+'">'+star_balloon+'</em></span>'
+                                    +    '<img src="/ba_step.png">'
+                                    +'</div>'
+                                    +'<div class="message-text">'
+                                    +    '<span class="nickname">'+session_user[0]['user_nickname']+'</span>'
+                                    +    '<span class="star_balloon_cnt">별풍선 <em>'+star_balloon+'</em>개</span>'
+                                    +'</div>'
+                                    +'<div class="balloon_img_bottom"></div>'
+                                +'</div>'
+                        socket.emit("push_chat",msg)
+                    }else{
+                        console.log(req.data)
+                    }
+                })
+            }else{
+                document.querySelector(".sub_modal").classList.add("display_flex")
+            }
+        })
     })
     
 
@@ -357,6 +477,9 @@
 
 <style scope>
     :root{
+        --ratioW: 16;
+        --ratioH: 9;
+        --sideContents: 414px;
         --nickname-ramdom-color1: #E12E2E;
         --nickname-ramdom-color2: #A90A0A;
         --nickname-ramdom-color3: #EB500D;
@@ -385,17 +508,21 @@
         justify-content: center;
         height: 100vh;
         gap: 0 24px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: calc((100vh - 180px)* var(--ratioW) / var(--ratioH) + var(--sideContents));
+    }
+    .live_player .live_player_body .player{
+        flex: 1 1 auto;
     }
     .live_player .live_player_body .player_area{
         position: relative;
         min-width: 500px;
         box-sizing: border-box;
         flex:1 1 auto;
-        max-width: 1150px;
     }
     .live_player .live_player_body .player_area video{
         width: 100%;
-        height: 670px;
     }
     .live_player .live_player_body .wrapping{
         width: 390px;
@@ -454,6 +581,7 @@
         overflow-y: auto;
         height: 100%;
         scrollbar-width: none;
+        margin-bottom: 10px;
     }
     .live_player .live_player_body .setting_chating .chating .chat_area{
         display: flex;
@@ -619,6 +747,7 @@
         margin-right: 3px;
         font-size: 0;
         vertical-align: middle;
+        
     }
     .live_player .chatting-list-item .username .author{
         font-weight: 600;
@@ -746,7 +875,7 @@
         margin-bottom: 12px;
         z-index: 1;
     }
-    .live_player .star_balloon-list-item .message-text .username{
+    .live_player .star_balloon-list-item .message-text .nickname{
         font-size: 12px;
         color: #d5d7dc;
     }
@@ -778,11 +907,13 @@
         border-radius: 50%;
         margin-right: 20px;
         cursor: pointer;
+        flex-shrink: 0;
     }
     .live_player .player_info .user_info div:nth-child(1) .nickname{
         font-size: 22px;
         margin-right: 20px;
         cursor: pointer;
+        flex-shrink: 0;
     }
     .live_player .player_info .user_info div:nth-child(1) .subscribe{
         padding: 10px 15px;
@@ -793,6 +924,7 @@
         align-items: center;
         cursor: pointer;
         position: relative;
+        flex-shrink: 0;
     }
     .live_player .player_info .user_info div:nth-child(1) .subscribe:hover[tip]::after{
         content: attr(tip);
@@ -824,6 +956,7 @@
         align-items: center;
         cursor: pointer;
         position: relative;
+        flex-shrink: 0;
     }
     .live_player .player_info .user_info div:nth-child(1) .star:hover[tip]::after{
         content: attr(tip);
@@ -855,6 +988,7 @@
         align-items: center;
         cursor: pointer;
         position: relative;
+        flex-shrink: 0;
     }
     .live_player .player_info .user_info div:nth-child(1) .up_cnt:hover[tip]::after{
         content: attr(tip);
@@ -1054,5 +1188,21 @@
         border-radius: 10px;
         margin-right: 5px;
         cursor: pointer;
+    }
+
+    .live_player .modal{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(23,25,28,0.6);
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    .live_player .modal.display_flex{
+        display: flex;
     }
 </style>

@@ -45,7 +45,7 @@ const routes = [
         props: true,
     },
     {
-        path: '/live_player/:live_id',
+        path: '/live_player/:user_id',
         name: 'livePlayer',
         component: LivePlayer,
         props: true,

@@ -489,7 +489,6 @@
                 'user_id':props.user_id,
                 'channel_comment' : document.querySelector(".textarea textarea").value
             }).then((req)=>{
-                
                 if(req.status == 200) {
                     document.querySelector(".modal").classList.remove("display_flex")
                     document.querySelector(".infomation_self span").textContent = document.querySelector(".textarea textarea").value
@@ -512,12 +511,13 @@
         })
         document.querySelector(".put_balloon").addEventListener("click",()=>{
 
-            let openWin = window.open("/gift_balloon/"+props.user_id, "giftBalloon", "width=570,height=580");
+            let openWin = window.open("/gift_balloon/"+props.user_id, "giftBalloon", "width=500,height=540");
             
         })
         axios.get("/api/user_channel_info/"+props.user_id+"/")
         .then((req)=>{
-            let result = req.data.result[0]
+            let result = req.data[0]
+            console.log(req)
             for(let i=0;i<Object.keys(result).length;i++){
                 if(Object.keys(result)[i] == 'profile_path'){
                     document.querySelector(".my_profile").src = imgPath + result[Object.keys(result)[i]]
@@ -572,7 +572,7 @@
 
         axios.get("/api/passionate_user_list/"+props.user_id)
         .then((req)=>{
-            const data = req.data.result
+            const data = req.data
             
             for(let i=0;i<data.length-9;i++){
                 

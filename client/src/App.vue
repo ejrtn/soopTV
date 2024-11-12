@@ -14,6 +14,7 @@ html{
 html,body,#app{
     background: #0c0d0e;
     color: #e2e4e9;
+    font-style: normal;
 }
 body{
     margin: 0;

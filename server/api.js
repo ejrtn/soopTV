@@ -1,21 +1,45 @@
 var express = require('express');
 var router = express.Router();
 const sql = require("./sql.js")
-const conn = require("./db.js");
+const mariadb = require("mariadb");
 
-router.get("/",function(req){
-    req.session.user_id = 'test1'
-    console.log(req.session.user_id)
-})
+require('dotenv').config();
+pool = mariadb.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port:process.env.DB_PORT,
+    connectionLimit: 100,
+    charset:'utf8mb4',
+    multipleStatements : true
+});
+async function queryDatabase(sql,parameter,res) {
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query(sql,parameter)
+        const jsonString = JSON.stringify(rows, (key, value) =>
+            typeof value === "bigint" ? value.toString() : value
+        );
+        res.send(jsonString)
+    } catch (err) {
+        console.error("Error: ", err);
+    } finally {
+        if (conn) conn.release();
+    }
+}
 
-router.get('/user_id_check/:user_id', function(req, res, next) {
-    conn.query(sql['user']['user_id_check'],[req.params.user_id,req.params.user_id,req.params.user_id],(err,rows) => {
-        res.send({'result':rows})
-    })
+router.get('/user_id_check/:user_id', async function(req, res, next) {
+    const rows = queryDatabase(sql['user']['user_id_check'], [
+        req.params.user_id,
+        req.params.user_id,
+        req.params.user_id
+    ],res);
 });
 
-router.post('/user_insert', function(req, res, next) {
-    conn.query(sql['user']['user_insert'],[
+router.post('/user_insert', async function(req, res, next) {
+    const rows = queryDatabase(sql['user']['user_insert'],[
         req.body.user_id,
         req.body.user_password,
         req.body.user_nickname,
@@ -27,80 +51,94 @@ router.post('/user_insert', function(req, res, next) {
         req.body.advertisement_email,
         req.body.advertisement_sms,
         req.body.advertisement_sms_night
-    ],(err,rows) => {
-        res.send({'result':rows.statusText})
-    })
+    ],res);
 });
 
-router.post('/user_login_check', function(req, res, next) {
-    conn.query(sql['user']['user_login_check'],[req.body.user_id,req.body.user_password],(err,rows) => {
-        req.session.user = req.body.user_id;
-        req.session.save((err) => {
-            if (err) {
-                return res.status(500).send("<h1>500 error</h1>");
-            }
-            res.send({'result':rows})
-        });
-        
-    })
-});
-
-
-router.get('/user_channel_info/:user_id', function(req, res, next) {
+router.post('/user_login_check', async function(req, res, next) {
     
-    conn.query(sql['user']['user_channel_info'],[req.params.user_id],(err,rows) => {
-        res.send({'result':rows})
-    })
+    const rows = queryDatabase(sql['user']['user_login_check'], [
+        req.body.user_id,
+        req.body.user_password
+    ],res);
+});
+router.post('/login_ok', async function(req, res, next) {
+    req.session.user = req.body.user_id
+    res.send(req.session.user)
 });
 
-router.post('/user_channel_comment', function(req, res, next) {
-    conn.query(sql['user']['user_channel_comment'],[
+
+router.get('/user_channel_info/:user_id', async function(req, res, next) {
+    const rows = queryDatabase(sql['user']['user_channel_info'], [
+        req.params.user_id,
+        req.params.user_id,
+        req.params.user_id
+    ],res);
+});
+
+router.post('/user_channel_comment', async function(req, res, next) {
+    const rows = queryDatabase(sql['user']['user_channel_comment'],[
         req.body.channel_comment
         , req.body.user_id
-    ],(err,rows) => {
-        res.send({'result': rows.status})
-    })
+    ],res);
+
 });
 
-router.get('/passionate_user_list/:user_id', function(req,res,next) {
-    conn.query(sql['passionate_user_list']['passionate_user_list_select'],[req.params.user_id],(err,rows) => {
-        res.send({'result':rows})
-    })
+router.get('/passionate_user_list/:user_id', async function(req,res,next) {
+    const rows = queryDatabase(sql['passionate_user_list']['passionate_user_list_select'],[
+        req.params.user_id
+    ],res);
 })
 
-router.get("/gift_balloon/:user_id", function(req,res,next) {
-    conn.query(sql['user']['gift_balloon'],[req.params.user_id,req.session.user],(err,rows) => {
-        res.send({'result':rows})
-    })
+router.get("/gift_balloon/:user_id", async function(req,res,next) {
+    req.session.user = req.params.user_id == 'test1' ? 'test2' : 'test1'
+    const rows = queryDatabase(sql['user']['gift_balloon'],[
+        req.params.user_id,
+        req.session.user
+    ],res);
 })
 
-router.post("/gift_balloon_action", function(req,res,next) {
-    const new_sql = sql['user']['update_add_star_balloon']
-                +sql['user']['update_get_star_balloon']
-                +sql['live_star_balloon_open_list']['insert_live_star_balloon_open_list']
-    conn.query(new_sql,[
-        req.body.star_balloon,
-        req.session.user,
-        req.body.star_balloon,
-        req.body.get_user_id,
-        req.session.user,
-        req.body.get_user_id,
-        req.body.star_balloon,
-    ],(err,rows) => {
-        res.send({'result':rows.status})
-    })
+router.post("/gift_balloon_action", async function(req,res,next) {
+    
+    const rows = queryDatabase(sql['user']['minus_add_star_balloon']
+        +sql['user']['update_get_star_balloon']
+        +sql['live_star_balloon_open_list']['insert_live_star_balloon_open_list'],[
+            req.body.star_balloon,
+            req.session.user,
+            req.body.star_balloon,
+            req.body.get_user_id,
+            req.session.user,
+            req.body.get_user_id,
+            req.body.star_balloon,
+        ],res);
     
 })
 
-router.post("/bj_viewers_chat", function(req,res,next) {
-    conn.query(sql['bj_viewers']['bj_viewers_chat'],[req.body.user_id,req.session.user],(err,rows) => {
-        res.send({'result':rows})
-    })
+router.post("/bj_viewers_chat", async function(req,res,next) {
+    const rows = queryDatabase(sql['bj_viewers']['bj_viewers_chat'],[req.body.user_id,req.session.user],res);
+
 })
 
-router.post("/live_user_info", function(req,res,next) {
-    conn.query(sql['user']['live_user_info'],[req.body.user_id,req.body.user_id],(err,rows) => {
-        res.send({'result':rows})
-    })
+router.post("/live_user_info", async function(req,res,next) {
+    const rows = queryDatabase(sql['user']['live_user_info'],[req.body.user_id,req.body.user_id],res);
+
 })
+
+router.post("/star_balloon_plus", async function(req,res,next) {
+    const rows = queryDatabase(sql['user']['plus_add_star_balloon'],[req.body.star_balloon,req.session.user],res);
+})
+
+router.post("/select_challenge", async function(req,res,next) {
+    const rows = queryDatabase(sql['challenge']['select_challenge'],[req.session.user,req.body.user_id],res);
+})
+
+router.post("/insert_challenge", async function(req,res,next) {
+    const rows = queryDatabase(sql['challenge']['insert_challenge'],[
+        req.session.user,
+        req.body.content,
+        req.body.bj_user_id,
+        req.body.star_balloon,
+        req.body.limit_time,
+    ],res);
+})
+
 module.exports = router;
