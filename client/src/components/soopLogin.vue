@@ -1,7 +1,5 @@
 <template>
     <div class="soopLogin_main">
-        <video id="videoPlayer" class="videoPlayer"  webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" muted controls></video>
-        
         <img src="/soop_logo.svg" class="logo">
         <span class="recommend_login_text">로그인 후 더 많은 서비스를 즐겨보세요.</span>
         <div class="id_input">

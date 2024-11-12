@@ -128,6 +128,7 @@ router.post("/star_balloon_plus", async function(req,res,next) {
 })
 
 router.post("/select_challenge", async function(req,res,next) {
+    req.session.user = req.params.user_id == 'test1' ? 'test2' : 'test1'
     const rows = queryDatabase(sql['challenge']['select_challenge'],[req.session.user,req.body.user_id],res);
 })
 

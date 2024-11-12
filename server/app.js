@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const webSocket = require("./socket");
-const NodeMediaServer = require("node-media-server");
 
 const sessionStore = new MySQLStore({
   host: process.env.DB_HOST,

@@ -173,7 +173,7 @@
     let signature_list = []
     let session_user = []
     onMounted(()=>{
-
+        
         let imgPath = inject("imgPath")['_value']
         axios.get("/api/gift_balloon/"+props.user_id)
         .then((req)=>{

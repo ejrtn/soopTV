@@ -18,7 +18,95 @@
                 <div><button class="btn-broadcast"></button></div>
                 <div><button class="btn-notice"></button></div>
                 <div><img src="/profile_coffee.JPG" class="profile-img" alt="test1"></div>
-                <div><button class="btn-allMenu"></button></div>
+                <div>
+                    <button class="btn-allMenu"></button>
+                </div>
+                <div class="inner">
+                    <dl class="menu01">
+                        <dt>콘텐츠</dt>
+                        <dd class="new">
+                            <a href="https://cinety.sooplive.co.kr" target="_self">시네티</a>
+                        </dd>
+                        <dd class="new">
+                            <a href="https://billiards.sooplive.co.kr" target="_self">당구</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://esports.sooplive.co.kr" target="_self">e스포츠</a>
+                        </dd>
+                        <dd class="new">
+                            <a href="https://esports.sooplive.co.kr/gggl/" target="_self">GGGL</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://bora.sooplive.co.kr/home" target="_self">보.라에서 생긴 일</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://ani.sooplive.co.kr" target="_self">애니메이션관</a>
+                        </dd>
+                    </dl>
+                    <dl class="menu02">
+                        <dt>후원 및 아이템</dt>
+                        <dd class="">
+                            <a href="https://item.sooplive.co.kr/starballoon.php" target="_self">별풍선</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://item.sooplive.co.kr/subscription.php" target="_self">구독</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://adballoon.sooplive.co.kr/savings.php?view=list" target="_self">애드벌룬</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://afevent2.sooplive.co.kr/app/signature_balloon/index.php" target="_self">시그니처 풍선</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://item.sooplive.co.kr/quickview.php" target="_self">아이템</a>
+                        </dd>
+                    </dl>
+                    <dl class="menu03">
+                        <dt>서비스</dt>
+                        <dd class="">
+                            <a href="https://mypoint.sooplive.co.kr" target="_self">포인트 &amp; 크레딧</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://sooptore.sooplive.co.kr" target="_blank">숲토어</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://partnership.sooplive.co.kr" target="_blank">파트너십</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://ogqmarket.sooplive.co.kr" target="_self">SOOP OGQ마켓</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://studio.sooplive.co.kr" target="_blank">오픈 스튜디오</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://extension.sooplive.co.kr" target="_self">확장 프로그램 마켓</a>
+                        </dd>
+                        </dl>
+                    <dl class="menu04">
+                        <dt>스트리머</dt>
+                        <dd class="">
+                            <a href="https://afevent2.sooplive.co.kr/app/starbj/index.php" target="_self">스타 스트리머</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://contentlab.sooplive.co.kr" target="_top">콘텐츠 지원센터</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://newbj.sooplive.co.kr" target="_self">신입 스트리머 지원센터</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://vodbj.sooplive.co.kr" target="_self">편집 스트리머 지원센터</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://bjguide.sooplive.co.kr" target="_self">스트리머 가이드</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://bjedu.sooplive.co.kr" target="_self">스트리머 교육</a>
+                        </dd>
+                        <dd class="">
+                            <a href="https://issue.sooplive.co.kr" target="_self">이슈방송스케줄</a>
+                        </dd>
+                    </dl>
+                </div>
             </div>
         </header>
         <div class="main_body">
@@ -157,7 +245,6 @@
             <div class="live_list">
                 <div class="player_wrap">
                     <div class="poster">
-                        <video></video>
                     </div>
                     <div class="swiper">
                         <div class="swiper-slide">
@@ -203,6 +290,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -214,6 +302,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -225,6 +314,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -236,6 +326,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -247,6 +338,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                     </div>
                     <div class="cBox-list">
@@ -260,6 +352,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -271,6 +364,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -282,6 +376,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -293,6 +388,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                         <div class="cBox">
                             <img src="277829392.jfif" class="thumbnail">
@@ -304,6 +400,7 @@
                                     <p class="tag"><span>토크/캠방</span></p>
                                 </span>
                             </div>
+                            <label class="views"><em data-testid="view-count">987</em></label>
                         </div>
                     </div>
                 </div>
@@ -793,7 +890,59 @@
         live_id:String,
     })
     onMounted(()=>{
-
+        document.body.addEventListener("click",(e)=>{
+            if(e.target.classList.contains("channel_info_open_icon")
+                || e.target.parentNode.classList.contains("channel_info_open_icon")){
+                if(document.querySelector(".channel_info").classList.contains("display_flex")){
+                    document.querySelector(".channel_info").classList.remove("display_flex")
+                }else{
+                    document.querySelector(".channel_info").classList.add("display_flex")
+                }
+            }else if(e.target.parentNode.classList.contains("fan_text")){
+                document.querySelector(".fan_list").classList.add("open")
+            }else if(e.target.parentNode.classList.contains("fan_list_head")){
+                document.querySelector(".fan_list").classList.remove("open")
+            }else if(e.target.classList.contains("btn-allMenu")){
+                if(document.querySelector("header .serviceUtil .inner").classList.contains("display_flex")){
+                    document.querySelector("header .serviceUtil .inner").classList.remove("display_flex")
+                }else{
+                    document.querySelector("header .serviceUtil .inner").classList.add("display_flex")
+                }
+            }else{
+                let el = e.target
+                while(1){
+                    if(!el.classList.contains("channel_info")){
+                        el = el.parentNode
+                    }else{
+                        break;
+                    }
+                    if(el.tagName == "BODY"){
+                        document.querySelector("header .serviceUtil .inner").classList.remove("display_flex")
+                        break;
+                    }
+                }
+            }
+        })
+        document.querySelectorAll(".cBox-list")[0].addEventListener("click",(e)=>{
+            if(e.target.tagName=='IMG' && e.target.parentNode.classList.contains("streamer_info")){
+                location.href='/ch/test1'
+            }else if(e.target.tagName=='IMG' && e.target.classList.contains("thumbnail")){
+                location.href='/live_player/test1'
+            }
+        })
+        document.querySelectorAll(".cBox-list")[1].addEventListener("click",(e)=>{
+            if(e.target.tagName=='IMG' && e.target.parentNode.classList.contains("streamer_info")){
+                location.href='/ch/test1'
+            }else if(e.target.tagName=='IMG' && e.target.classList.contains("thumbnail")){
+                location.href='/live_player/test1'
+            }
+        })
+        document.querySelector(".vod_list").addEventListener("click",(e)=>{
+            if(e.target.tagName=='IMG'){
+                location.href='/ch/test1'
+            }
+        })
+        
     })
 </script>
 
@@ -871,6 +1020,7 @@
         margin-right: 20px;
         display: flex;
         align-items: center;
+        position: relative;
     }
     header .serviceUtil div{
         margin-left: 20px;
@@ -898,6 +1048,91 @@
     }
     header .serviceUtil .btn-allMenu{
         background: url("/public/right_menu.svg") 50% 50% no-repeat;
+    }
+    header .serviceUtil .inner{
+        position: absolute;
+        padding: 30px;
+        background: #1c1e22;
+        display: none;
+        top: 46px;
+        right: 2px;
+        width: 760px;
+        height: 305px;
+        margin: 0;
+        border-radius: 15px;
+        box-sizing: border-box;
+    }
+    header .serviceUtil .inner.display_flex{
+        display: flex;
+    }
+    header .serviceUtil .inner:hover{
+        background: #1c1e22;
+    }
+    header .serviceUtil .inner dl{
+        display: flex;
+        flex-flow: column;
+        margin: 0;
+        width: 25%;
+        height: 100%;
+        gap: 14px 0px;
+        font-size: 13px;
+    }
+    header .serviceUtil .inner dl:nth-child(1){
+        border-right: 1px solid hsla(223, 8%, 50%, .3);
+    }
+
+    header .serviceUtil .inner dl:nth-child(2){
+        border-right: 1px solid hsla(223, 8%, 50%, .3);
+        margin-left: 25px;
+    }
+
+    header .serviceUtil .inner dl:nth-child(3){
+        border-right: 1px solid hsla(223, 8%, 50%, .3);
+        margin-left: 25px;
+    }
+
+    header .serviceUtil .inner dl:nth-child(4){
+        margin-left: 25px;
+    }
+
+    header .serviceUtil .inner dt{
+        color:#44a3ff;
+        font-size: 14px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+    }
+    header .serviceUtil .inner dt::before{
+        width: 24px;
+        height: 24px;
+        margin-right: 2px;
+        margin-left: -3px;
+    }
+    header .serviceUtil .inner dl:nth-child(1) dt::before{
+        content: "";
+        background: url("/public/header_content.svg") 50% 50% no-repeat;
+    }
+    header .serviceUtil .inner dl:nth-child(2) dt::before{
+        content: "";
+        background: url("/public/header_gift.svg") 50% 50% no-repeat;
+    }
+    header .serviceUtil .inner dl:nth-child(3) dt::before{
+        content: "";
+        background: url("/public/header_service.svg") 50% 50% no-repeat;
+    }
+    header .serviceUtil .inner dl:nth-child(4) dt::before{
+        content: "";
+        background: url("/public/header_streamer.svg") 50% 50% no-repeat;
+    }
+    header .serviceUtil .inner dd{
+        margin: 0;
+    }
+    header .serviceUtil .inner a{
+        color: #d5d7dc;
+        font-size: 13px;
+        align-items: center;
+        list-style: none;
+        text-decoration-line: none;
     }
     header .serviceUtil img{
         width: 32px;
@@ -1045,7 +1280,7 @@
         flex-grow: 1;
         margin-top: 80px;
         margin-right: 20px;
-        width: 100%;
+        width: 100vh;
     }
 
 
@@ -1057,12 +1292,13 @@
     }
     .mainView .player_wrap .poster{
         width: 80%;
-        background: #f6f6f6;
         height: 100%;
         border-radius: 50px 0px 0px 20px;
         cursor: pointer;
         overflow: hidden;
-        background: url("https://img-display.sooplive.co.kr/creatives/image/20241104/62711/62711.jpg");
+        background: url("/public/main_benner.jpg") 50% 50% no-repeat;
+        background-color: rgb(77, 54, 40);
+        background-size: auto;
     }
     .mainView .player_wrap .poster video{
         width: 100%;
@@ -1107,10 +1343,41 @@
         display: flex;
         justify-content: space-between;
         gap: 0 20px;
+        position: relative;
     }
     .mainView .cBox{
         width: 20%;
         margin-bottom: 40px;
+        position: relative;
+    }
+    .mainView .cBox label{
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 7px;
+        left: 7px;
+        background: rgba(0, 0, 0, .6);
+        height: 22px;
+        padding: 0 8px 0 7px;
+        border-radius: 30px;
+        color: #fff;
+        font-size: 12px;
+        line-height: 22px;
+        z-index: 5;
+        transition: opacity .2s;
+        
+    }
+    .mainView .cBox label::before{
+        content: "";
+        display: block;
+        background: #ff2424;
+        width: 6px;
+        height: 6px;
+        margin-right: 6px;
+        border-radius: 50%;
+    }
+    .mainView .cBox label em{
+        font-style: normal;
     }
     .mainView .cBox p{
         margin: 0;
